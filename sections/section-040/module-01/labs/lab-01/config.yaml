@@ -1,0 +1,56 @@
+# Require SLSA Provenance On Inventory Images
+# Astrona graded lab. Schema: internal/config.LabConfig.
+
+metadata:
+  name: "ats-123-lab-040-01"
+  docs:
+    guide: "solution.md"
+    solution: "solution.md"
+    question: "question.md"
+    examQuestion: "question.md"
+    prerequisites: "prerequisites.md"
+
+bootstrap:
+  init:
+    - name: "install-tools"
+      description: "Installs Helm 3.22.1, the lab registry, the workstation tools, the signing key and Policy Controller v0.15.1"
+      type: "file"
+      source: "bootstrap/01-install-tools.sh"
+    - name: "ats-123-lab-040-01-setup"
+      description: "Creates the starting state the task works from"
+      type: "file"
+      source: "bootstrap/02-seed-state.sh"
+  manifests:
+    - name: "lab-start"
+      description: "Namespaces, the lab registry and the workstation pod."
+      type: "file"
+      source: "manifests/lab-start.yaml"
+
+testing:
+  init:
+    - name: "wait-for-workstation"
+      description: "Waits until the workstation, the registry and the webhook answer"
+      type: "file"
+      source: "testing/wait-for-workstation.sh"
+    - name: "reference-solution"
+      description: "The remediation a correct learner performs; used by `astrona test`"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "validate-provenance-policy"
+      description: "Confirms inventory-signed requires a SLSA v1 provenance attestation from the trusted builder, signed by the lab key"
+      type: "file"
+      source: "validation/validate-provenance-policy.sh"
+    - name: "validate-provenance-admission"
+      description: "Confirms prod admits 6.15.0 (trusted builder) and refuses 6.14.1 (other builder) and 6.14.0 (no provenance)"
+      type: "file"
+      source: "validation/validate-provenance-admission.sh"
+    - name: "validate-safe-settings"
+      description: "Confirms the webhook still fails closed and images that match no policy are denied"
+      type: "file"
+      source: "validation/validate-safe-settings.sh"
+
+teardown:
+  keepCluster: false

@@ -1,0 +1,324 @@
+# Course manifest for ATS123 - Kubernetes Enforcement With Policy Controller (Sigstore).
+#
+# One entry per section under `modules:`. Each section lists, in order: its
+# README, then for each module the landing page (course.md), its parts
+# (course-0N-*.md), and right after the part a lab tests, the lab's
+# question.md reading and the `type: lab` entry. The module's summary page
+# comes last. The section capstone closes the section. Playgrounds are not
+# listed: the landing page's playground marker shows them. solution.md is
+# never listed.
+#
+# Every `path:` is relative to this file.
+
+training:
+  id: ATS123
+  title: "Sigstore: Kubernetes Enforcement With Policy Controller"
+  maturity: draft
+  description: >
+    Training material covering the Kubernetes Enforcement With Policy
+    Controller domain of the Sigstore training path: how the Policy
+    Controller admission webhook resolves tags and checks images, opting
+    namespaces in and failing closed, ClusterImagePolicy with key and
+    keyless authorities and signing identities, attestation policies in CUE
+    and Rego, and rolling policies out in warn mode before enforcing them.
+    Each module pairs a layered reader with an ungraded hands-on playground
+    and a graded practice lab. Each section closes with an integration
+    capstone. Written for Policy Controller v0.15.1 and cosign v3.1.4.
+
+  certification:
+    name: Sigstore
+    code: SIGSTORE
+    provider: Astrona
+    domain: Kubernetes Enforcement With Policy Controller
+    weight: 15
+
+modules:
+
+  - id: module-intro
+    title: "Introduction"
+    description: >
+      Start here. What this course trains you to do, how it is laid out, how
+      to get your machine ready with the astrona command-line tool, how the
+      content is written and checked, who maintains it, and how to report a
+      mistake.
+
+    content:
+      - type: reading
+        title: Introduction
+        path: sections/intro/README.md
+      - type: reading
+        title: "Welcome To The Course"
+        path: sections/intro/course-01-welcome.md
+      - type: reading
+        title: "Get Your Machine Ready"
+        path: sections/intro/course-02-get-your-machine-ready.md
+      - type: reading
+        title: "How This Course Is Made"
+        path: sections/intro/course-03-how-this-course-is-made.md
+
+  - id: module-010
+    title: "How Policy Controller Works"
+    description: >
+      Admission webhooks and the path a pod takes through Policy Controller:
+      tag-to-digest resolution, the opt-in namespace label, the no-match
+      policy, and what happens when the webhook cannot be reached.
+
+    content:
+      - type: reading
+        title: Section Overview
+        path: sections/section-010/README.md
+
+      - type: reading
+        title: "Gate Images At Admission With Policy Controller"
+        path: sections/section-010/module-01/course.md
+      - type: reading
+        title: "Admission Webhooks And The Policy Controller Flow"
+        path: sections/section-010/module-01/course-01-admission-webhooks-and-the-flow.md
+      - type: reading
+        title: "Opting Namespaces In And Failing Closed"
+        path: sections/section-010/module-01/course-02-opting-in-and-failing-closed.md
+      - type: reading
+        title: Question
+        path: sections/section-010/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Enforce Signatures In The prod Namespace Lab"
+        path: sections/section-010/module-01/labs/lab-01
+        difficulty: beginner
+        estimated_duration: 15m
+        topic: admission
+        task_kind: build
+        tags: [policy-controller, namespace-opt-in, dry-run, admission-webhook, no-match-policy]
+        learning_goals:
+          - Opt a namespace in to Policy Controller with its label
+          - Prove with a server-side dry run that an unsigned image is refused and a signed one admitted
+          - Keep other namespaces and the webhook's safe settings unchanged
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Policy Controller installation"
+            url: https://docs.sigstore.dev/policy-controller/installation/
+      - type: reading
+        title: Summary
+        path: sections/section-010/module-01/course-03-summary.md
+
+      - type: reading
+        title: Question
+        path: sections/section-010/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Restore Enforcement After An Outage Capstone"
+        path: sections/section-010/capstone/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 30m
+        topic: admission
+        task_kind: troubleshooting
+        tags: [policy-controller, failure-policy, no-match-policy, namespace-opt-in, admission-webhook, dry-run]
+        learning_goals:
+          - Find every workaround left behind after an outage of the webhook
+          - Restore a running webhook that fails closed and denies images no policy matches
+          - Prove that prod is enforced again while dev is untouched
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Policy Controller installation"
+            url: https://docs.sigstore.dev/policy-controller/installation/
+
+  - id: module-020
+    title: "Key-Based Policies"
+    description: >
+      Signing images for a cluster with a cosign key pair, and a
+      ClusterImagePolicy that trusts that key: image globs, key data and
+      Secrets, KMS keys, and enforce against warn mode.
+
+    content:
+      - type: reading
+        title: Section Overview
+        path: sections/section-020/README.md
+
+      - type: reading
+        title: "Require Images Signed With Your Key"
+        path: sections/section-020/module-01/course.md
+      - type: reading
+        title: "Signing Images For The Cluster"
+        path: sections/section-020/module-01/course-01-signing-for-the-cluster.md
+      - type: reading
+        title: "Key Authorities In A ClusterImagePolicy"
+        path: sections/section-020/module-01/course-02-key-authorities.md
+      - type: reading
+        title: Question
+        path: sections/section-020/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Write A Key-Based Image Policy Lab"
+        path: sections/section-020/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 20m
+        topic: key-policy
+        task_kind: build
+        tags: [clusterimagepolicy, key-authority, image-glob, cosign-sign, dry-run]
+        learning_goals:
+          - Write a ClusterImagePolicy that trusts the lab public key for the inventory images
+          - Prove that an image signed with another key and an unsigned image are refused
+          - Keep the webhook failing closed and denying images no policy matches
+        resources:
+          - name: "Policy Controller: configuring key authorities"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Signing containers with cosign"
+            url: https://docs.sigstore.dev/cosign/signing/signing_with_containers/
+      - type: reading
+        title: Summary
+        path: sections/section-020/module-01/course-03-summary.md
+
+      - type: reading
+        title: Question
+        path: sections/section-020/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Repair A Key Policy That Lets Everything Through Capstone"
+        path: sections/section-020/capstone/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 30m
+        topic: key-policy
+        task_kind: troubleshooting
+        tags: [clusterimagepolicy, key-authority, image-glob, warn-mode, no-match-policy, dry-run]
+        learning_goals:
+          - Read the warnings of a policy that matches nothing and trusts the wrong key
+          - Fix the glob, the key and the mode, and deny images no policy matches
+          - Prove that only images signed with the lab key are admitted in prod
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+
+  - id: module-030
+    title: "Keyless Policies And Identities"
+    description: >
+      Keyless signatures and the identity Fulcio writes into the
+      certificate, keyless authorities with issuer and subject rules for
+      GitHub Actions workflows, the Sigstore bundle format, and TrustRoot
+      resources for private Sigstore instances.
+
+    content:
+      - type: reading
+        title: Section Overview
+        path: sections/section-030/README.md
+
+      - type: reading
+        title: "Trust Signing Identities Instead Of Keys"
+        path: sections/section-030/module-01/course.md
+      - type: reading
+        title: "Keyless Signatures And The Identity In The Certificate"
+        path: sections/section-030/module-01/course-01-keyless-signatures-and-identities.md
+      - type: reading
+        title: "Keyless Authorities, Identities And Trust Roots"
+        path: sections/section-030/module-01/course-02-keyless-authorities.md
+      - type: reading
+        title: Question
+        path: sections/section-030/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Require Images Signed By The podinfo Release Workflow Lab"
+        path: sections/section-030/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: keyless-policy
+        task_kind: build
+        tags: [clusterimagepolicy, keyless-authority, identity, fulcio, rekor, dry-run]
+        learning_goals:
+          - Read the issuer and subject of a keyless signature with cosign verify
+          - Write a keyless policy that trusts only one repository's release workflow
+          - Prove that an image signed by another repository's workflow is refused
+        resources:
+          - name: "Policy Controller: configuring keyless authorities"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Verifying signatures"
+            url: https://docs.sigstore.dev/cosign/verifying/verify/
+          - name: "OIDC verification cheat sheet"
+            url: https://docs.sigstore.dev/quickstart/verification-cheat-sheet/
+      - type: reading
+        title: Summary
+        path: sections/section-030/module-01/course-03-summary.md
+
+      - type: reading
+        title: Question
+        path: sections/section-030/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Fix A Keyless Policy That Trusts Too Much Capstone"
+        path: sections/section-030/capstone/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 30m
+        topic: keyless-policy
+        task_kind: troubleshooting
+        tags: [keyless-authority, identity, image-glob, warn-mode, no-match-policy, dry-run]
+        learning_goals:
+          - Find why a keyless policy admits images from any repository
+          - Narrow the identity, widen the image glob and enforce the policy
+          - Prove that only the podinfo release workflow's images are admitted from ghcr.io
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "OIDC verification cheat sheet"
+            url: https://docs.sigstore.dev/quickstart/verification-cheat-sheet/
+
+  - id: module-040
+    title: "Attestation Policies And Rollout"
+    description: >
+      Attestations in a ClusterImagePolicy with CUE and Rego policies, SLSA
+      provenance and vulnerability attestations, and rolling a policy out
+      with warn mode, opt-in namespaces and the webhook's own messages.
+
+    content:
+      - type: reading
+        title: Section Overview
+        path: sections/section-040/README.md
+
+      - type: reading
+        title: "Check Attestations And Roll Policies Out"
+        path: sections/section-040/module-01/course.md
+      - type: reading
+        title: "Attestation Policies With CUE And Rego"
+        path: sections/section-040/module-01/course-01-attestation-policies.md
+      - type: reading
+        title: Question
+        path: sections/section-040/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Require SLSA Provenance On Inventory Images Lab"
+        path: sections/section-040/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: attestation-policy
+        task_kind: build
+        tags: [attestation, slsa-provenance, cue, cosign-attest, key-authority, dry-run]
+        learning_goals:
+          - Add a provenance attestation check with a CUE policy to an existing key policy
+          - Require the builder ID of the trusted build service
+          - Prove that images without provenance or from another builder are refused
+        resources:
+          - name: "Policy Controller: attestation policies"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Verifying attestations"
+            url: https://docs.sigstore.dev/cosign/verifying/attestation/
+          - name: "SLSA provenance v1"
+            url: https://slsa.dev/spec/v1.0/provenance
+      - type: reading
+        title: "Rolling Out Policies And Reading Denials"
+        path: sections/section-040/module-01/course-02-rolling-out-and-debugging.md
+      - type: reading
+        title: Summary
+        path: sections/section-040/module-01/course-03-summary.md
+
+      - type: reading
+        title: Question
+        path: sections/section-040/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Roll Out A Vulnerability Policy Safely Capstone"
+        path: sections/section-040/capstone/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 35m
+        topic: rollout
+        task_kind: troubleshooting
+        tags: [vuln-attestation, rego, warn-mode, namespace-opt-in, attestation, dry-run]
+        learning_goals:
+          - Read why a vulnerability policy in warn mode never matches its attestations
+          - Fix the predicate type, enforce the policy and limit it to prod
+          - Prove that an image with a critical finding is refused and a clean one admitted
+        resources:
+          - name: "Policy Controller: attestation policies"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Verifying attestations"
+            url: https://docs.sigstore.dev/cosign/verifying/attestation/

@@ -1,0 +1,17 @@
+# Helm values for the Sigstore policy-controller chart 0.10.8 in every
+# ATS123 environment. The chart's default image is v0.13.1; this course runs
+# v0.15.1 (see CLAUDE.md for why), pinned by digest.
+webhook:
+  image:
+    repository: ghcr.io/sigstore/policy-controller/policy-controller
+    # v0.15.1
+    version: sha256:0492bb264fb1d9bdc8e3f343ef542cc85b7dd7c7fd8d9524b453c2bd31a1d128
+  # Trust the lab registry's certificate authority.
+  registryCaBundle:
+    name: registry-ca
+    key: ca.crt
+  # The API server refuses pods when it cannot reach the webhook.
+  failurePolicy: Fail
+  configData:
+    no-match-policy: "deny"
+    enable-oci11: "true"

@@ -1,0 +1,192 @@
+# Every ATS123 environment: namespaces, the lab registry (TLS on port 5001,
+# reachable inside the cluster as registry.localtest.me:5001) and the
+# workstation pod with the Sigstore client tools. The registry certificate and
+# the signing key are created at start by the bootstrap script.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: registry
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: workstation
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cosign-system
+---
+# prod opts in to Policy Controller only when a task or page says so.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+  namespace: registry
+  labels:
+    app: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+        - name: registry
+          image: registry:3.1.2
+          env:
+            - name: REGISTRY_HTTP_ADDR
+              value: ":5001"
+            - name: REGISTRY_HTTP_TLS_CERTIFICATE
+              value: /certs/tls.crt
+            - name: REGISTRY_HTTP_TLS_KEY
+              value: /certs/tls.key
+            - name: REGISTRY_STORAGE_DELETE_ENABLED
+              value: "true"
+          ports:
+            - name: https
+              containerPort: 5001
+          readinessProbe:
+            httpGet:
+              path: /v2/
+              port: https
+              scheme: HTTPS
+          volumeMounts:
+            - name: certs
+              mountPath: /certs
+              readOnly: true
+      volumes:
+        - name: certs
+          secret:
+            secretName: registry-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry
+  namespace: registry
+spec:
+  selector:
+    app: registry
+  ports:
+    - name: https
+      port: 5001
+      targetPort: https
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workstation-setup
+  namespace: workstation
+data:
+  install-tools.sh: |
+    #!/bin/sh
+    # Downloads the pinned Sigstore client tools into /tools (an emptyDir
+    # shared with the main container). Runs once, as an init container.
+    set -eu
+    COSIGN_VERSION=3.1.4
+    REKOR_VERSION=1.5.5
+    GITSIGN_VERSION=0.18.0
+    REGCTL_VERSION=0.11.7
+    ARCH="$(uname -m)"
+    case "$ARCH" in x86_64) ARCH=amd64 ;; aarch64|arm64) ARCH=arm64 ;; esac
+    wget -q "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-${ARCH}" -O /tools/cosign
+    wget -q "https://github.com/sigstore/rekor/releases/download/v${REKOR_VERSION}/rekor-cli-linux-${ARCH}" -O /tools/rekor-cli
+    wget -q "https://github.com/sigstore/gitsign/releases/download/v${GITSIGN_VERSION}/gitsign_${GITSIGN_VERSION}_linux_${ARCH}" -O /tools/gitsign
+    wget -q "https://github.com/regclient/regclient/releases/download/v${REGCTL_VERSION}/regctl-linux-${ARCH}" -O /tools/regctl
+    chmod 0755 /tools/*
+    ls -l /tools
+  start.sh: |
+    #!/bin/sh
+    # Main container start: install packages, trust the lab CA and restore
+    # the signing key if they already exist (after a pod restart).
+    apk add --no-cache curl jq git openssl ca-certificates >/dev/null
+    if [ -s /lab-ca/ca.crt ]; then
+      cp /lab-ca/ca.crt /usr/local/share/ca-certificates/lab-ca.crt
+      update-ca-certificates >/dev/null 2>&1
+    fi
+    mkdir -p /work/keys
+    if [ -s /signing-key/cosign.key ]; then
+      cp /signing-key/cosign.key /signing-key/cosign.pub /work/keys/
+    fi
+    while true; do sleep 30; done
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workstation
+  namespace: workstation
+  labels:
+    app: workstation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workstation
+  template:
+    metadata:
+      labels:
+        app: workstation
+    spec:
+      initContainers:
+        - name: install-tools
+          image: alpine:3.22
+          command: ["sh", "/setup/install-tools.sh"]
+          volumeMounts:
+            - name: tools
+              mountPath: /tools
+            - name: setup
+              mountPath: /setup
+      containers:
+        - name: workstation
+          image: alpine:3.22
+          command: ["sh", "/setup/start.sh"]
+          workingDir: /work
+          env:
+            - name: PATH
+              value: /tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+            - name: REGISTRY
+              value: registry.localtest.me:5001
+          volumeMounts:
+            - name: tools
+              mountPath: /tools
+            - name: setup
+              mountPath: /setup
+            - name: work
+              mountPath: /work
+            - name: lab-ca
+              mountPath: /lab-ca
+              readOnly: true
+            - name: signing-key
+              mountPath: /signing-key
+              readOnly: true
+      volumes:
+        - name: tools
+          emptyDir: {}
+        - name: work
+          emptyDir: {}
+        - name: setup
+          configMap:
+            name: workstation-setup
+        - name: lab-ca
+          configMap:
+            name: registry-ca
+            optional: true
+        - name: signing-key
+          secret:
+            secretName: inventory-signing-key
+            optional: true
