@@ -7,7 +7,6 @@ metadata:
   name: "ats-123-playground-040-01"
   docs:
     guide: "docs/overview.md"
-
 bootstrap:
   init:
     - name: "prepare"
@@ -19,6 +18,10 @@ bootstrap:
       description: "Namespaces, the lab registry and the workstation pod."
       type: "file"
       source: "manifests/lab-start.yaml"
-
 teardown:
   keepCluster: false
+runtime:
+  kind:
+    preloadImages:
+      - alpine:3.22
+      - registry:3.1.2

@@ -9,7 +9,6 @@ metadata:
     question: "question.md"
     examQuestion: "question.md"
     prerequisites: "prerequisites.md"
-
 bootstrap:
   init:
     - name: "install-tools"
@@ -25,7 +24,6 @@ bootstrap:
       description: "Namespaces, the lab registry and the workstation pod."
       type: "file"
       source: "manifests/lab-start.yaml"
-
 testing:
   init:
     - name: "wait-for-workstation"
@@ -36,7 +34,6 @@ testing:
       description: "The remediation a correct learner performs; used by `astrona test`"
       type: "file"
       source: "solution/apply.sh"
-
 validation:
   scripts:
     - name: "validate-provenance-policy"
@@ -51,6 +48,10 @@ validation:
       description: "Confirms the webhook still fails closed and images that match no policy are denied"
       type: "file"
       source: "validation/validate-safe-settings.sh"
-
 teardown:
   keepCluster: false
+runtime:
+  kind:
+    preloadImages:
+      - alpine:3.22
+      - registry:3.1.2
