@@ -12,7 +12,7 @@ This section teaches Policy Controller to trust identities instead of keys. You 
 - What the identity of a GitHub Actions workflow looks like.
 - Verifying a keyless signature with `cosign verify` and an identity.
 - Keyless authorities: `url`, `identities` with `issuer`, `subject` and their regular expression forms.
-- The Sigstore bundle format, `signatureFormat: bundle` and the transparency log check.
+- The Sigstore bundle format, the classic signature format Policy Controller v0.15.1 verifies, and the transparency log check.
 - `TrustRoot` resources for private Sigstore instances.
 
 ## The learning path

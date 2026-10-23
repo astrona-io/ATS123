@@ -82,7 +82,6 @@ spec:
         identities:
           - issuerRegExp: .*
             subjectRegExp: .*
-      signatureFormat: bundle
 EOF
 
 echo "[lab] Starting state ready."

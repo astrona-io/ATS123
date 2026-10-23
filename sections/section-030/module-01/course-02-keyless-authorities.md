@@ -18,7 +18,7 @@ An image passes the authority when its signature has a Fulcio certificate that c
 
 ## The bundle format
 
-Cosign v3 stores signatures in the Sigstore bundle format by default: one JSON document with the signature, the certificate and the transparency log evidence, attached to the image through the OCI referrers layout. The podinfo release image was signed this way. Policy Controller reads the classic cosign format unless an authority sets `signatureFormat: bundle`, and in v0.15.1 it reads the bundle format only for keyless authorities. The course also sets `enable-oci11: "true"` in Policy Controller's settings, so the webhook can find signatures stored with the referrers layout.
+Cosign v3 stores signatures in the Sigstore bundle format by default: one JSON document with the signature, the certificate and the transparency log evidence, attached to the image through the OCI referrers layout. Older cosign versions write the classic format instead: a separate signature image tagged `sha256-<digest>.sig` next to the image. Policy Controller reads the classic format unless an authority sets `signatureFormat: bundle`. Policy Controller v0.15.1 cannot yet verify image signatures in the bundle format: an authority with `signatureFormat: bundle` refuses every image with `bundle support for image signatures is not yet implemented`. podinfo releases from 6.12.0 on are signed only in the bundle format, so the examples use podinfo 6.10.0, whose release workflow still wrote the classic format, and the policies leave `signatureFormat` out. The course also sets `enable-oci11: "true"` in Policy Controller's settings, so the webhook can find signatures stored with the referrers layout.
 
 ## Write the policy
 
@@ -41,7 +41,6 @@ spec:
         identities:
           - issuer: https://token.actions.githubusercontent.com
             subjectRegExp: ^https://github\.com/stefanprodan/podinfo/\.github/workflows/release\.yml@refs/tags/.*$
-      signatureFormat: bundle
 ```
 
 Apply it:
@@ -55,7 +54,7 @@ The issuer is exact. The subject is a regular expression because the tag changes
 Then check the result with both images:
 
 ```sh
-kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.15.0 --dry-run=server
+kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.10.0 --dry-run=server
 kubectl -n prod run check --image=ghcr.io/fluxcd/source-controller:v1.9.6 --dry-run=server
 ```
 
@@ -76,7 +75,7 @@ You now have a keyless policy that admits one workflow's images from a whole reg
 > [!WARNING]
 > - **An unanchored regular expression.** Without `^` and `$`, `github.com/stefanprodan/podinfo/` also matches a subject in another repository whose name contains that text.
 > - **Unescaped dots.** `release.yml` as a regular expression also matches `releaseXyml`; escape it as `release\.yml`.
-> - **Missing `signatureFormat: bundle` for an image signed by cosign v3.** The webhook looks for a classic signature, finds none, and refuses a correctly signed image.
+> - **An image signed only in the bundle format.** Policy Controller v0.15.1 finds no classic signature without `signatureFormat: bundle`, and refuses the image with `bundle support for image signatures is not yet implemented` with it. Check the format with `cosign tree` before you choose the image.
 > - **A glob that covers only the allowed project.** `ghcr.io/stefanprodan/**` leaves every other `ghcr.io` image to the no-match policy, which may admit it.
 
 ## Your mission: Require Images Signed By The podinfo Release Workflow

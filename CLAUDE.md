@@ -277,14 +277,15 @@ Risks to check first, in this order:
    authority is keyless, and a key authority with no `ctlog` skips the
    transparency log check (`IgnoreTlog = true`). Every key-based policy relies
    on both facts.
-3. **The keyless example images.** `ghcr.io/stefanprodan/podinfo:6.15.0` was
-   signed in its release workflow with cosign from `sigstore/cosign-installer`
-   v4.1.2 (cosign v3, so the new bundle format), identity
-   `https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.15.0`,
-   issuer `https://token.actions.githubusercontent.com`. The keyless policies
-   set `signatureFormat: bundle` and `enable-oci11: "true"`. Confirm with
-   `cosign verify` before the first run; if the signature is in the legacy
-   format, drop `signatureFormat: bundle`.
+3. **The keyless example images.** Checked on a run (2026-10-23): Policy
+   Controller v0.15.1 refuses any `signatureFormat: bundle` image authority
+   with `bundle support for image signatures is not yet implemented`, and
+   podinfo releases from 6.12.0 on carry only bundle signatures. Section 030
+   therefore uses `ghcr.io/stefanprodan/podinfo:6.10.0`, signed keyless in
+   the classic format (`sha256-<digest>.sig`), identity
+   `https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.10.0`,
+   issuer `https://token.actions.githubusercontent.com`, and its policies
+   leave `signatureFormat` out.
    `ghcr.io/fluxcd/source-controller:v1.9.6` is the "signed by another
    repository" example; it is refused either way.
 4. **Server-side dry run.** Graders admit pods with

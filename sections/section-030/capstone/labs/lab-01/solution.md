@@ -8,7 +8,7 @@ The grader checks three things: the shape of `podinfo-release`, the two dry runs
 
 ```sh
 kubectl -n prod run check --image=ghcr.io/fluxcd/source-controller:v1.9.6 --dry-run=server
-kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.15.0 --dry-run=server
+kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.10.0 --dry-run=server
 ```
 
 Both are admitted. The Flux image comes with no warning at all, and the podinfo image may come with a warning from the policy.
@@ -41,7 +41,6 @@ spec:
         identities:
           - issuer: https://token.actions.githubusercontent.com
             subjectRegExp: ^https://github\.com/stefanprodan/podinfo/\.github/workflows/release\.yml@refs/tags/.*$
-      signatureFormat: bundle
 ```
 
 Apply it:
@@ -63,7 +62,7 @@ If the chart repository is missing on your machine, add it first with `helm repo
 ## Step 5: Prove the result
 
 ```sh
-kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.15.0 --dry-run=server
+kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.10.0 --dry-run=server
 kubectl -n prod run check --image=ghcr.io/fluxcd/source-controller:v1.9.6 --dry-run=server
 ```
 

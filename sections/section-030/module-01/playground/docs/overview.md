@@ -12,7 +12,7 @@ This is a **playground**, not a lab. It starts a fresh cluster with Policy Contr
 
   | Image | Signed by |
   | --- | --- |
-  | `ghcr.io/stefanprodan/podinfo:6.15.0` | The `release.yml` workflow of `stefanprodan/podinfo`, on the tag `6.15.0` |
+  | `ghcr.io/stefanprodan/podinfo:6.10.0` | The `release.yml` workflow of `stefanprodan/podinfo`, on the tag `6.10.0` |
   | `ghcr.io/fluxcd/source-controller:v1.9.6` | A workflow of the Flux project |
 
 The workstation pod and Policy Controller need outbound internet for these examples. The lab registry from the other modules runs here too, but this module does not use it.
@@ -28,12 +28,12 @@ try_image() {
 }
 ```
 
-Use them like this: `try_image prod ghcr.io/stefanprodan/podinfo:6.15.0`, `ws cosign verify ghcr.io/stefanprodan/podinfo:6.15.0 --certificate-identity-regexp '.*' --certificate-oidc-issuer-regexp '.*'`.
+Use them like this: `try_image prod ghcr.io/stefanprodan/podinfo:6.10.0`, `ws cosign verify ghcr.io/stefanprodan/podinfo:6.10.0 --certificate-identity-regexp '.*' --certificate-oidc-issuer-regexp '.*'`.
 
 ## Practice tasks
 
 - Verify the podinfo image with `--certificate-identity-regexp '.*'` and `--certificate-oidc-issuer-regexp '.*'`, and read the identity cosign reports. Then verify it with the exact identity.
 - Try the Flux image with the podinfo identity and read why it fails.
 - Apply a policy for `ghcr.io/**` with `issuerRegExp: .*` and `subjectRegExp: .*` and watch both images pass. Narrow it step by step.
-- Remove `signatureFormat: bundle` from a working keyless policy and read why the podinfo image is now refused.
+- Add `signatureFormat: bundle` to a working keyless policy and read why the podinfo image is now refused.
 - Change the policy's glob to `ghcr.io/stefanprodan/**` and see what happens to the Flux image under `no-match-policy: warn`.

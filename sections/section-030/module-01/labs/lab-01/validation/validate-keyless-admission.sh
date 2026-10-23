@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PASS when: Confirms prod admits podinfo 6.15.0 and refuses the Flux source-controller image signed by another repository.
+# PASS when: Confirms prod admits podinfo 6.10.0 and refuses the Flux source-controller image signed by another repository.
 set -uo pipefail
 
 export PATH="/usr/local/bin:$HOME/.local/bin:$PATH"
@@ -62,14 +62,14 @@ wait_for_policy_controller() {
   kubectl -n cosign-system rollout status deployment/policy-controller-webhook --timeout=300s >/dev/null
 }
 
-IMAGE_UNDER_TEST="ghcr.io/stefanprodan/podinfo:6.15.0"
+IMAGE_UNDER_TEST="ghcr.io/stefanprodan/podinfo:6.10.0"
 case "$IMAGE_UNDER_TEST" in
-  ""|*@) echo "FAIL: could not resolve the image for podinfo 6.15.0, signed by the podinfo release workflow; is the registry up?"; exit 1 ;;
+  ""|*@) echo "FAIL: could not resolve the image for podinfo 6.10.0, signed by the podinfo release workflow; is the registry up?"; exit 1 ;;
 esac
 RESULT="$(admission prod "$IMAGE_UNDER_TEST")"
 case "$RESULT" in
   ALLOWED*) ;;
-  *) echo "FAIL: podinfo 6.15.0, signed by the podinfo release workflow in prod should be allowed, got: $RESULT"; exit 1 ;;
+  *) echo "FAIL: podinfo 6.10.0, signed by the podinfo release workflow in prod should be allowed, got: $RESULT"; exit 1 ;;
 esac
 case "$RESULT" in
   *[Ww]arning*) echo "FAIL: the admission returned a warning, so a policy is still in warn mode or matched nothing: $RESULT"; exit 1 ;;

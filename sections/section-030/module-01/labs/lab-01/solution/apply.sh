@@ -79,6 +79,5 @@ spec:
         identities:
           - issuer: https://token.actions.githubusercontent.com
             subjectRegExp: ^https://github\.com/stefanprodan/podinfo/\.github/workflows/release\.yml@refs/tags/.*$
-      signatureFormat: bundle
 EOF
 sleep 10

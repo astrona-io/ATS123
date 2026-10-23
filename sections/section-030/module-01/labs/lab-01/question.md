@@ -10,9 +10,9 @@ The platform team allows images from `ghcr.io` in `prod`, but only those built a
 
 ## Your task
 
-1. Find the issuer and the subject of the signature on `ghcr.io/stefanprodan/podinfo:6.15.0` with `cosign verify` in the workstation pod.
+1. Find the issuer and the subject of the signature on `ghcr.io/stefanprodan/podinfo:6.10.0` with `cosign verify` in the workstation pod.
 2. Create a `ClusterImagePolicy` named `podinfo-release` that covers every image from `ghcr.io` and accepts only signatures from that release workflow on any release tag.
-3. Prove with server-side dry runs in `prod` that `ghcr.io/stefanprodan/podinfo:6.15.0` is admitted and `ghcr.io/fluxcd/source-controller:v1.9.6` is refused.
+3. Prove with server-side dry runs in `prod` that `ghcr.io/stefanprodan/podinfo:6.10.0` is admitted and `ghcr.io/fluxcd/source-controller:v1.9.6` is refused.
 
 ## Constraints
 

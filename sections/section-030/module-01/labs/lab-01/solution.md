@@ -10,8 +10,8 @@ Verify the image in the workstation pod with the identity you expect from the wo
 
 ```sh
 ws() { kubectl -n workstation exec -i deploy/workstation -- "$@"; }
-ws cosign verify ghcr.io/stefanprodan/podinfo:6.15.0 \
-  --certificate-identity https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.15.0 \
+ws cosign verify ghcr.io/stefanprodan/podinfo:6.10.0 \
+  --certificate-identity https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.10.0 \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 ```
 
@@ -36,7 +36,6 @@ spec:
         identities:
           - issuer: https://token.actions.githubusercontent.com
             subjectRegExp: ^https://github\.com/stefanprodan/podinfo/\.github/workflows/release\.yml@refs/tags/.*$
-      signatureFormat: bundle
 ```
 
 Apply it:
@@ -45,12 +44,12 @@ Apply it:
 kubectl apply -f clusterimagepolicy-podinfo-release.yaml
 ```
 
-`signatureFormat: bundle` is needed because the release workflow signed with cosign v3, which writes the Sigstore bundle format.
+The policy has no `signatureFormat`: podinfo 6.10.0 is signed in the classic cosign format, which is the format Policy Controller v0.15.1 can verify.
 
 ## Step 3: Prove the result
 
 ```sh
-kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.15.0 --dry-run=server
+kubectl -n prod run check --image=ghcr.io/stefanprodan/podinfo:6.10.0 --dry-run=server
 kubectl -n prod run check --image=ghcr.io/fluxcd/source-controller:v1.9.6 --dry-run=server
 ```
 
@@ -68,8 +67,8 @@ astrona submit -c sections/section-030/module-01/labs/lab-01
 | --- | --- |
 | `subjectRegExp: .*` | Any keyless signature from GitHub passes, so the Flux image is admitted |
 | Glob `ghcr.io/stefanprodan/**` | The Flux image matches no policy and falls to the no-match policy instead of being checked |
-| The exact subject with `@refs/tags/6.15.0` | It works today and refuses the next release |
-| No `signatureFormat: bundle` | The webhook looks for a classic signature and refuses the podinfo image too |
+| The exact subject with `@refs/tags/6.10.0` | It works today and refuses the next release |
+| Adding `signatureFormat: bundle` | Policy Controller v0.15.1 cannot verify image signatures in the bundle format and refuses the podinfo image too |
 
 ## Practice on your own
 

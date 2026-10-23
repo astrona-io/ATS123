@@ -30,10 +30,10 @@ The diagram shows the workflow trading its GitHub identity token for a certifica
 Fulcio copies two facts from the token into the certificate. The **issuer** is the URL of the identity provider that issued the token; for GitHub Actions it is `https://token.actions.githubusercontent.com`. The **subject** is who the token was for; Fulcio writes it into the certificate's Subject Alternative Name (SAN). For a GitHub Actions workflow, the subject is a URL made of the repository, the workflow file and the Git reference it ran on:
 
 ```
-https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.15.0
+https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.10.0
 ```
 
-This subject names the repository `stefanprodan/podinfo`, the workflow file `release.yml`, and the tag `6.15.0` the workflow ran for. A different repository, a different workflow file, or a run on a branch gives a different subject. That is what makes the identity useful: it is far narrower than "anyone who has the key".
+This subject names the repository `stefanprodan/podinfo`, the workflow file `release.yml`, and the tag `6.10.0` the workflow ran for. A different repository, a different workflow file, or a run on a branch gives a different subject. That is what makes the identity useful: it is far narrower than "anyone who has the key".
 
 ## Read and check a real identity
 
@@ -48,8 +48,8 @@ kubectl -n workstation exec -it deploy/workstation -- sh
 Verify the image with the exact identity of its release run:
 
 ```sh
-cosign verify ghcr.io/stefanprodan/podinfo:6.15.0 \
-  --certificate-identity https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.15.0 \
+cosign verify ghcr.io/stefanprodan/podinfo:6.10.0 \
+  --certificate-identity https://github.com/stefanprodan/podinfo/.github/workflows/release.yml@refs/tags/6.10.0 \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 ```
 
@@ -58,7 +58,7 @@ cosign verify ghcr.io/stefanprodan/podinfo:6.15.0 \
 Now require the identity of a different repository on the same image:
 
 ```sh
-cosign verify ghcr.io/stefanprodan/podinfo:6.15.0 \
+cosign verify ghcr.io/stefanprodan/podinfo:6.10.0 \
   --certificate-identity-regexp '^https://github\.com/fluxcd/' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 ```

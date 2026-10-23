@@ -41,7 +41,7 @@ validation:
       type: "file"
       source: "validation/validate-keyless-policy.sh"
     - name: "validate-keyless-admission"
-      description: "Confirms prod admits podinfo 6.15.0 and refuses the Flux source-controller image signed by another repository"
+      description: "Confirms prod admits podinfo 6.10.0 and refuses the Flux source-controller image signed by another repository"
       type: "file"
       source: "validation/validate-keyless-admission.sh"
     - name: "validate-safe-settings"

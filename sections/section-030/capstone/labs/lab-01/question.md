@@ -22,5 +22,5 @@ A teammate wrote the keyless policy `podinfo-release` so that `prod` runs only i
 ## Done when
 
 - `podinfo-release` enforces, covers `ghcr.io/**`, and has only the narrow keyless identity.
-- In `prod`, a dry run of `ghcr.io/stefanprodan/podinfo:6.15.0` is admitted with no warning, and a dry run of `ghcr.io/fluxcd/source-controller:v1.9.6` is refused.
+- In `prod`, a dry run of `ghcr.io/stefanprodan/podinfo:6.10.0` is admitted with no warning, and a dry run of `ghcr.io/fluxcd/source-controller:v1.9.6` is refused.
 - `no-match-policy` is `deny` or not set, and the webhook's failure policy is `Fail`.
