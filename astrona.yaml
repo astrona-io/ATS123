@@ -29,8 +29,6 @@ training:
     name: Sigstore
     code: SIGSTORE
     provider: Astrona
-    domain: Kubernetes Enforcement With Policy Controller
-    weight: 15
 
 modules:
 
