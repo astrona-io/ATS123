@@ -1,0 +1,244 @@
+# Knowledge check for section 040. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats123-040
+course_id: ATS123
+exam_code: SIGSTORE
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-040
+  title: Attestation Policies And Rollout
+placement:
+  position: after
+  reading: sections/section-040/capstone/labs/lab-01/question.md
+questions:
+- id: ats123-040-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain attestations
+  source_readings:
+  - sections/section-040/module-01/course-01-attestation-policies.md
+  prompt: What are the three parts of an in-toto statement?
+  options:
+  - id: a
+    text: A `key`, a `certificate` and a `signature`.
+    explanation: Not correct. Those belong to the signature, not the statement.
+  - id: b
+    text: A `glob`, an `authority` and a `mode`.
+    explanation: Not correct. Those are fields of a ClusterImagePolicy.
+  - id: c
+    text: An `issuer`, a `subject` and an `identity`.
+    explanation: Not correct. Those describe a keyless certificate.
+  - id: d
+    text: A `subject`, a `predicateType` and a `predicate`.
+    explanation: Correct. The subject is the image digest and the predicate is the
+      statement.
+  correct_option: d
+  explanation: Correct. The subject is the image digest and the predicate is the statement.
+- id: ats123-040-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Know the provenance type
+  source_readings:
+  - sections/section-040/module-01/course-01-attestation-policies.md
+  prompt: Which value does `cosign attest --type slsaprovenance1` set as the predicate
+    type?
+  options:
+  - id: a
+    text: "`https://cosign.sigstore.dev/attestation/vuln/v1`"
+    explanation: Not correct. That is the vulnerability type.
+  - id: b
+    text: "`https://slsa.dev/provenance/v0.2`"
+    explanation: Not correct. That is the older type.
+  - id: c
+    text: "`https://slsa.dev/provenance/v1`"
+    explanation: Correct. The older `--type slsaprovenance` writes the v0.2 type instead.
+  - id: d
+    text: "`https://in-toto.io/Statement/v1`"
+    explanation: Not correct. That is the statement type, not a predicate type.
+  correct_option: c
+  explanation: Correct. The older `--type slsaprovenance` writes the v0.2 type instead.
+- id: ats123-040-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Find the builder in provenance
+  source_readings:
+  - sections/section-040/module-01/course-01-attestation-policies.md
+  prompt: Where does SLSA v1 provenance name the build service?
+  options:
+  - id: a
+    text: In `buildDefinition.builder`.
+    explanation: Not correct. The builder is under `runDetails`.
+  - id: b
+    text: In `runDetails.builder.id`.
+    explanation: Correct. A policy checks this field to trust a builder.
+  - id: c
+    text: In `subject.name`.
+    explanation: Not correct. The subject names the image.
+  - id: d
+    text: In `metadata.scanner`.
+    explanation: Not correct. That belongs to the vulnerability format.
+  correct_option: b
+  explanation: Correct. A policy checks this field to trust a builder.
+- id: ats123-040-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain a CUE policy
+  source_readings:
+  - sections/section-040/module-01/course-01-attestation-policies.md
+  prompt: How does a CUE policy decide that a statement is compliant?
+  options:
+  - id: a
+    text: Every field the CUE value sets must exist in the statement with that value.
+    explanation: Correct. A missing field or a different value fails the check.
+  - id: b
+    text: It counts the findings in the statement.
+    explanation: Not correct. That kind of logic is easier to write in Rego.
+  - id: c
+    text: It only checks that the statement is signed.
+    explanation: Not correct. The signature is checked by the authority.
+  - id: d
+    text: It runs a script from the image.
+    explanation: Not correct. Policies do not run code from images.
+  correct_option: a
+  explanation: Correct. A missing field or a different value fails the check.
+- id: ats123-040-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Require an attestation
+  source_readings:
+  - sections/section-040/module-01/course-01-attestation-policies.md
+  prompt: An authority has an `attestations` list, and an image has a valid signature
+    but no attestation. What happens?
+  options:
+  - id: a
+    text: The image is refused.
+    explanation: Correct. A valid signature is not enough when an attestation is required.
+  - id: b
+    text: The image is admitted because the signature is valid.
+    explanation: Not correct. The attestation is a second requirement.
+  - id: c
+    text: The image is admitted with a warning.
+    explanation: 'Not correct. Only `mode: warn` admits failing images with a warning.'
+  - id: d
+    text: The webhook creates the attestation.
+    explanation: Not correct. The webhook never signs anything.
+  correct_option: a
+  explanation: Correct. A valid signature is not enough when an attestation is required.
+- id: ats123-040-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Write a Rego policy
+  source_readings:
+  - sections/section-040/module-01/course-02-rolling-out-and-debugging.md
+  prompt: What must a Rego policy for Policy Controller make true?
+  options:
+  - id: a
+    text: The rule `allow` in the package `main`.
+    explanation: Not correct. Policy Controller reads `isCompliant` in `sigstore`.
+  - id: b
+    text: The rule `deny` with a message.
+    explanation: Not correct. Policy Controller does not use a deny rule.
+  - id: c
+    text: The rule `isCompliant` in the package `sigstore`.
+    explanation: Correct. The verified statement is available as `input`.
+  - id: d
+    text: A CUE value named `isCompliant`.
+    explanation: Not correct. That is the Rego form, not CUE.
+  correct_option: c
+  explanation: Correct. The verified statement is available as `input`.
+- id: ats123-040-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Roll out a policy
+  source_readings:
+  - sections/section-040/module-01/course-02-rolling-out-and-debugging.md
+  prompt: What is the first step of a safe rollout of a new policy?
+  options:
+  - id: a
+    text: 'Apply it with `mode: enforce` in every namespace.'
+    explanation: Not correct. That can stop deployments you did not mean to touch.
+  - id: b
+    text: 'Apply it with `mode: warn` and read the warnings.'
+    explanation: Correct. Warn mode shows what would be refused without refusing it.
+  - id: c
+    text: Set the failure policy to `Ignore`.
+    explanation: Not correct. That lets unchecked images in during any outage.
+  - id: d
+    text: Opt `kube-system` in.
+    explanation: Not correct. System namespaces should stay out.
+  correct_option: b
+  explanation: Correct. Warn mode shows what would be refused without refusing it.
+- id: ats123-040-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read a warning
+  source_readings:
+  - sections/section-040/module-01/course-02-rolling-out-and-debugging.md
+  prompt: A clean image gets a warning from a policy in warn mode. What does it mean?
+  options:
+  - id: a
+    text: The image has a critical finding.
+    explanation: Not correct. A clean image has none. The policy does not match its
+      attestations.
+  - id: b
+    text: The webhook is down.
+    explanation: Not correct. A down webhook gives an error, not a policy warning.
+  - id: c
+    text: The namespace is not opted in.
+    explanation: Not correct. Without the label there would be no warning at all.
+  - id: d
+    text: The policy is wrong, for example a wrong `predicateType`, not the image.
+    explanation: Correct. Enforcing it would refuse every image.
+  correct_option: d
+  explanation: Correct. Enforcing it would refuse every image.
+- id: ats123-040-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Debug a denial
+  source_readings:
+  - sections/section-040/module-01/course-02-rolling-out-and-debugging.md
+  prompt: Where do you look first to learn why the webhook refused a pod?
+  options:
+  - id: a
+    text: In `kubectl describe pod` of the refused pod.
+    explanation: Not correct. No pod was created.
+  - id: b
+    text: In the events of the namespace.
+    explanation: Not correct. Nothing was stored, so there is no event.
+  - id: c
+    text: In the error message, then in the log of `policy-controller-webhook`.
+    explanation: Correct. A refused request is not stored, so there are no events.
+  - id: d
+    text: In the Rekor transparency log.
+    explanation: Not correct. Rekor does not record admission decisions.
+  correct_option: c
+  explanation: Correct. A refused request is not stored, so there are no events.
+- id: ats123-040-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Fix a policy that never matches
+  source_readings:
+  - sections/section-040/capstone/labs/lab-01/question.md
+  prompt: "`inventory-vulns` warns on every image, including a clean one. Which cause
+    fits?"
+  options:
+  - id: a
+    text: The policy is in enforce mode.
+    explanation: Not correct. In enforce mode it would refuse, not warn.
+  - id: b
+    text: The `predicateType` of the attestation entry does not match the type of
+      the attestations.
+    explanation: Correct. A policy that never finds its attestation fails every image.
+  - id: c
+    text: The namespace has no label.
+    explanation: Not correct. Without the label there would be no warnings.
+  - id: d
+    text: The images are not signed with the lab key.
+    explanation: Not correct. The signatures are valid. The attestation type is the
+      problem.
+  correct_option: b
+  explanation: Correct. A policy that never finds its attestation fails every image.

@@ -1,0 +1,249 @@
+# Knowledge check for section 030. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats123-030
+course_id: ATS123
+exam_code: SIGSTORE
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-030
+  title: Keyless Policies And Identities
+placement:
+  position: after
+  reading: sections/section-030/capstone/labs/lab-01/question.md
+questions:
+- id: ats123-030-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain keyless signing
+  source_readings:
+  - sections/section-030/module-01/course-01-keyless-signatures-and-identities.md
+  prompt: What is the role of Fulcio in keyless signing?
+  options:
+  - id: a
+    text: It stores the signature and the certificate in a transparency log.
+    explanation: Not correct. That is Rekor.
+  - id: b
+    text: It issues the OIDC identity token.
+    explanation: Not correct. The identity provider, such as GitHub, issues the token.
+  - id: c
+    text: It checks the identity token and issues a short-lived certificate for the
+      new public key.
+    explanation: Correct. Fulcio is the certificate authority of Sigstore.
+  - id: d
+    text: It stores the image in the registry.
+    explanation: Not correct. The registry stores images.
+  correct_option: c
+  explanation: Correct. Fulcio is the certificate authority of Sigstore.
+- id: ats123-030-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain keyless signing
+  source_readings:
+  - sections/section-030/module-01/course-01-keyless-signatures-and-identities.md
+  prompt: What is the role of Rekor?
+  options:
+  - id: a
+    text: It records the signature and certificate, so they can be checked after the
+      certificate expires.
+    explanation: Correct. Rekor is Sigstore's transparency log.
+  - id: b
+    text: It issues the certificate.
+    explanation: Not correct. Fulcio issues certificates.
+  - id: c
+    text: It keeps the private key of the signer.
+    explanation: Not correct. The private key is thrown away after signing.
+  - id: d
+    text: It checks admission requests in the cluster.
+    explanation: Not correct. That is the job of Policy Controller.
+  correct_option: a
+  explanation: Correct. Rekor is Sigstore's transparency log.
+- id: ats123-030-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read the identity of a certificate
+  source_readings:
+  - sections/section-030/module-01/course-01-keyless-signatures-and-identities.md
+  prompt: For a GitHub Actions workflow, what does the certificate subject contain?
+  options:
+  - id: a
+    text: The private key fingerprint of the signer.
+    explanation: Not correct. The subject names an identity, not a key.
+  - id: b
+    text: The registry address of the signed image.
+    explanation: Not correct. The image is not part of the subject.
+  - id: c
+    text: Only the GitHub user name.
+    explanation: Not correct. The subject names the workflow, not just the user.
+  - id: d
+    text: A URL made of the repository, the workflow file and the Git reference.
+    explanation: Correct. A different workflow or tag gives a different subject.
+  correct_option: d
+  explanation: Correct. A different workflow or tag gives a different subject.
+- id: ats123-030-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read the identity of a certificate
+  source_readings:
+  - sections/section-030/module-01/course-01-keyless-signatures-and-identities.md
+  prompt: What is the issuer of a GitHub Actions keyless signature?
+  options:
+  - id: a
+    text: "`https://fulcio.sigstore.dev`"
+    explanation: Not correct. That is the Fulcio instance that issued the certificate.
+  - id: b
+    text: "`https://token.actions.githubusercontent.com`"
+    explanation: Correct. It is the URL of the identity provider that issued the token.
+  - id: c
+    text: "`https://github.com`"
+    explanation: Not correct. That is the website, not the token issuer.
+  - id: d
+    text: "`https://rekor.sigstore.dev`"
+    explanation: Not correct. That is the transparency log.
+  correct_option: b
+  explanation: Correct. It is the URL of the identity provider that issued the token.
+- id: ats123-030-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Check an identity with cosign
+  source_readings:
+  - sections/section-030/module-01/course-01-keyless-signatures-and-identities.md
+  prompt: Why does `cosign verify` of the Flux image fail when it requires the podinfo
+    workflow identity?
+  options:
+  - id: a
+    text: The Flux image has no signature.
+    explanation: Not correct. It has a valid keyless signature.
+  - id: b
+    text: The certificate has expired.
+    explanation: Not correct. Expiry does not fail verification. The log entry proves
+      the time.
+  - id: c
+    text: Fulcio refuses to check Flux images.
+    explanation: Not correct. Fulcio only issues certificates at signing time.
+  - id: d
+    text: The signature is valid, but its subject does not match the required identity.
+    explanation: Correct. The identity is what separates the two images.
+  correct_option: d
+  explanation: Correct. The identity is what separates the two images.
+- id: ats123-030-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Write an identity
+  source_readings:
+  - sections/section-030/module-01/course-02-keyless-authorities.md
+  prompt: In a keyless authority, why is the subject written as `subjectRegExp`?
+  options:
+  - id: a
+    text: The subject is not allowed to be an exact string.
+    explanation: Not correct. `subject` takes an exact string.
+  - id: b
+    text: The tag in the subject changes with every release.
+    explanation: Correct. The expression matches any release tag.
+  - id: c
+    text: A regular expression is faster to check.
+    explanation: Not correct. The reason is that the tag changes.
+  - id: d
+    text: Fulcio writes the subject as a regular expression.
+    explanation: Not correct. Fulcio writes a plain URL.
+  correct_option: b
+  explanation: Correct. The expression matches any release tag.
+- id: ats123-030-q07
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Avoid loose identities
+  source_readings:
+  - sections/section-030/module-01/course-02-keyless-authorities.md
+  prompt: 'What does `subjectRegExp: .*` with `issuerRegExp: .*` accept?'
+  options:
+  - id: a
+    text: Every keyless signature from every identity provider the public Fulcio trusts.
+    explanation: Correct. Anyone with an account can then sign an image that passes.
+  - id: b
+    text: Only signatures from GitHub Actions.
+    explanation: Not correct. The issuer expression also matches Google and Microsoft.
+  - id: c
+    text: No signatures, because the expression is empty.
+    explanation: Not correct. `.*` matches everything.
+  - id: d
+    text: Only signatures from the same repository.
+    explanation: Not correct. No repository is named.
+  correct_option: a
+  explanation: Correct. Anyone with an account can then sign an image that passes.
+- id: ats123-030-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Write a regular expression
+  source_readings:
+  - sections/section-030/module-01/course-02-keyless-authorities.md
+  prompt: Why must the dots in `release.yml` be escaped as `release\.yml` in `subjectRegExp`?
+  options:
+  - id: a
+    text: A dot ends the regular expression.
+    explanation: Not correct. A dot is a normal part of the syntax.
+  - id: b
+    text: Fulcio rejects names with a dot.
+    explanation: Not correct. Fulcio does not check the policy.
+  - id: c
+    text: An unescaped dot matches any character.
+    explanation: Correct. The escape makes it match a real dot only.
+  - id: d
+    text: The dot is the separator between issuer and subject.
+    explanation: Not correct. There is no such separator.
+  correct_option: c
+  explanation: Correct. The escape makes it match a real dot only.
+- id: ats123-030-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Know the bundle limit
+  source_readings:
+  - sections/section-030/module-01/course-02-keyless-authorities.md
+  prompt: 'What happens with Policy Controller v0.15.1 when an authority sets `signatureFormat:
+    bundle`?'
+  options:
+  - id: a
+    text: Every image is admitted.
+    explanation: Not correct. It refuses all of them.
+  - id: b
+    text: Every image is refused with the message that bundle support for image signatures
+      is not yet implemented.
+    explanation: Correct. That is why the course uses podinfo 6.10.0, which has a
+      classic signature.
+  - id: c
+    text: Only images signed in the bundle format are admitted.
+    explanation: Not correct. This version cannot verify that format.
+  - id: d
+    text: The policy is switched to warn mode.
+    explanation: Not correct. The mode does not change.
+  correct_option: b
+  explanation: Correct. That is why the course uses podinfo 6.10.0, which has a classic
+    signature.
+- id: ats123-030-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Fix a keyless policy
+  source_readings:
+  - sections/section-030/capstone/labs/lab-01/question.md
+  prompt: The glob of a keyless policy covers only `ghcr.io/stefanprodan/**`. What
+    is the risk?
+  options:
+  - id: a
+    text: Images of stefanprodan are refused.
+    explanation: Not correct. They are covered by the glob.
+  - id: b
+    text: The policy stops checking the issuer.
+    explanation: Not correct. The issuer is checked inside the authority.
+  - id: c
+    text: Other `ghcr.io` images fall through to the no-match policy, which may admit
+      them.
+    explanation: Correct. The glob should cover every image that must come from the
+      workflow.
+  - id: d
+    text: The webhook is switched to `Ignore`.
+    explanation: Not correct. The failure policy is a separate setting.
+  correct_option: c
+  explanation: Correct. The glob should cover every image that must come from the
+    workflow.

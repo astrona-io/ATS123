@@ -119,6 +119,10 @@ modules:
             url: https://docs.sigstore.dev/policy-controller/overview/
           - name: "Policy Controller installation"
             url: https://docs.sigstore.dev/policy-controller/installation/
+      - type: quiz
+        title: "Knowledge Check: How Policy Controller Works"
+        path: sections/section-010/quiz.yaml
+        pass_score: 70
 
   - id: module-020
     title: "Key-Based Policies"
@@ -183,6 +187,10 @@ modules:
         resources:
           - name: "Policy Controller overview"
             url: https://docs.sigstore.dev/policy-controller/overview/
+      - type: quiz
+        title: "Knowledge Check: Key-Based Policies"
+        path: sections/section-020/quiz.yaml
+        pass_score: 70
 
   - id: module-030
     title: "Keyless Policies And Identities"
@@ -252,6 +260,10 @@ modules:
             url: https://docs.sigstore.dev/policy-controller/overview/
           - name: "OIDC verification cheat sheet"
             url: https://docs.sigstore.dev/quickstart/verification-cheat-sheet/
+      - type: quiz
+        title: "Knowledge Check: Keyless Policies And Identities"
+        path: sections/section-030/quiz.yaml
+        pass_score: 70
 
   - id: module-040
     title: "Attestation Policies And Rollout"
@@ -320,3 +332,11 @@ modules:
             url: https://docs.sigstore.dev/policy-controller/overview/
           - name: "Verifying attestations"
             url: https://docs.sigstore.dev/cosign/verifying/attestation/
+      - type: quiz
+        title: "Knowledge Check: Attestation Policies And Rollout"
+        path: sections/section-040/quiz.yaml
+        pass_score: 70
+      - type: quiz
+        title: "Final Domain Quiz"
+        path: sections/final-domain-quiz.yaml
+        pass_score: 70

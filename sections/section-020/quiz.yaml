@@ -1,0 +1,250 @@
+# Knowledge check for section 020. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats123-020
+course_id: ATS123
+exam_code: SIGSTORE
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-020
+  title: Key-Based Policies
+placement:
+  position: after
+  reading: sections/section-020/capstone/labs/lab-01/question.md
+questions:
+- id: ats123-020-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Sign an image with cosign
+  source_readings:
+  - sections/section-020/module-01/course-01-signing-for-the-cluster.md
+  prompt: What does cosign sign when you give it an image tag?
+  options:
+  - id: a
+    text: The tag name itself.
+    explanation: Not correct. Tags are not signed. The digest is.
+  - id: b
+    text: The digest the tag points to at that moment.
+    explanation: Correct. The signature belongs to the digest, not to the tag name.
+  - id: c
+    text: Every image in the repository.
+    explanation: Not correct. One signing command signs one digest.
+  - id: d
+    text: The registry manifest list of all tags.
+    explanation: Not correct. Cosign signs one image digest.
+  correct_option: b
+  explanation: Correct. The signature belongs to the digest, not to the tag name.
+- id: ats123-020-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the classic signature format
+  source_readings:
+  - sections/section-020/module-01/course-01-signing-for-the-cluster.md
+  prompt: Why does the course sign with `--new-bundle-format=false` for a key policy?
+  options:
+  - id: a
+    text: The bundle format cannot be signed with a key pair.
+    explanation: Not correct. The format can be used with keys. Policy Controller
+      just does not read it for key authorities.
+  - id: b
+    text: The flag encrypts the private key.
+    explanation: Not correct. The private key is encrypted by `cosign generate-key-pair`.
+  - id: c
+    text: The flag uploads the signature to Rekor.
+    explanation: Not correct. Upload is controlled by `--tlog-upload`.
+  - id: d
+    text: Policy Controller v0.15.1 does not read the Sigstore bundle format for key
+      authorities.
+    explanation: Correct. It reads the classic signature stored under a `.sig` tag.
+  correct_option: d
+  explanation: Correct. It reads the classic signature stored under a `.sig` tag.
+- id: ats123-020-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Find a classic signature in the registry
+  source_readings:
+  - sections/section-020/module-01/course-01-signing-for-the-cluster.md
+  prompt: Where does cosign store a classic signature?
+  options:
+  - id: a
+    text: In the same repository, under a tag `sha256-<digest>.sig`.
+    explanation: Correct. Policy Controller builds the same tag name from the digest.
+  - id: b
+    text: In the `cosign-system` namespace as a Secret.
+    explanation: Not correct. Secrets hold public keys for policies, not signatures.
+  - id: c
+    text: In a file next to `cosign.key` on the signer.
+    explanation: Not correct. The signature is stored in the registry.
+  - id: d
+    text: In the image layers, changing the digest.
+    explanation: Not correct. A signature never changes the image digest.
+  correct_option: a
+  explanation: Correct. Policy Controller builds the same tag name from the digest.
+- id: ats123-020-q04
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Verify a signature
+  source_readings:
+  - sections/section-020/module-01/course-01-signing-for-the-cluster.md
+  prompt: Why does the course add `--insecure-ignore-tlog=true` to `cosign verify`
+    for the lab key?
+  options:
+  - id: a
+    text: It skips the check of the public key.
+    explanation: Not correct. The key is still checked with `--key`.
+  - id: b
+    text: It makes cosign accept unsigned images.
+    explanation: Not correct. An unsigned image still fails to verify.
+  - id: c
+    text: The image was signed without a Rekor entry, so there is none to find.
+    explanation: Correct. Without the flag, cosign looks for a log entry and fails.
+  - id: d
+    text: It allows HTTP connections to the registry.
+    explanation: Not correct. That is a different flag.
+  correct_option: c
+  explanation: Correct. Without the flag, cosign looks for a log entry and fails.
+- id: ats123-020-q05
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Know the fields of a ClusterImagePolicy
+  source_readings:
+  - sections/section-020/module-01/course-02-key-authorities.md
+  prompt: Which `spec` field lists the patterns of the images a policy applies to?
+  options:
+  - id: a
+    text: "`authorities`, with `key` entries."
+    explanation: Not correct. `authorities` list the ways an image can pass.
+  - id: b
+    text: "`images`, with `glob` entries."
+    explanation: Correct. The policy covers every image that matches one of the globs.
+  - id: c
+    text: "`mode`, with `enforce` or `warn`."
+    explanation: Not correct. `mode` sets what happens when a check fails.
+  - id: d
+    text: "`namespaces`, with a list of names."
+    explanation: Not correct. Namespaces are opted in with a label, not in the policy.
+  correct_option: b
+  explanation: Correct. The policy covers every image that matches one of the globs.
+- id: ats123-020-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Match a glob
+  source_readings:
+  - sections/section-020/module-01/course-02-key-authorities.md
+  prompt: Images are named `registry.localtest.me:5001/inventory/podinfo`. Which glob
+    matches them?
+  options:
+  - id: a
+    text: "`registry.localtest.me/inventory/**`"
+    explanation: Not correct. The port `:5001` is missing, so nothing matches.
+  - id: b
+    text: "`registry.localtest.me:5001/inventory/*`"
+    explanation: Not correct. A single `*` does not match `/`, so deeper repositories
+      are missed.
+  - id: c
+    text: "`inventory/**`"
+    explanation: Not correct. The glob is matched against the full image name including
+      the registry.
+  - id: d
+    text: "`registry.localtest.me:5001/inventory/**`"
+    explanation: Correct. The registry name with its port must match exactly, and
+      `**` covers every repository below it.
+  correct_option: d
+  explanation: Correct. The registry name with its port must match exactly, and `**`
+    covers every repository below it.
+- id: ats123-020-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Give a key to a policy
+  source_readings:
+  - sections/section-020/module-01/course-02-key-authorities.md
+  prompt: Which way of giving the public key to a policy keeps the key out of the
+    policy and lets you rotate it without editing it?
+  options:
+  - id: a
+    text: "`key.data`, with the PEM text inline."
+    explanation: Not correct. The key is then part of the policy and a rotation edits
+      the policy.
+  - id: b
+    text: "`key.kms`, with a key management service address."
+    explanation: Not correct. KMS fetches the key from a service. It is not a Secret.
+  - id: c
+    text: "`key.secretRef.name`, naming a Secret in `cosign-system`."
+    explanation: Correct. The Secret holds the key and the policy only names it.
+  - id: d
+    text: A Secret in the namespace of the pod.
+    explanation: Not correct. Policy Controller reads Secrets from `cosign-system`
+      only.
+  correct_option: c
+  explanation: Correct. The Secret holds the key and the policy only names it.
+- id: ats123-020-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use warn mode
+  source_readings:
+  - sections/section-020/module-01/course-02-key-authorities.md
+  prompt: 'What does `mode: warn` do to an image that fails the policy?'
+  options:
+  - id: a
+    text: It admits the image and returns a warning.
+    explanation: Correct. The check still runs, but nothing is refused.
+  - id: b
+    text: It refuses the image and returns a warning.
+    explanation: Not correct. Refusing is `enforce`.
+  - id: c
+    text: It skips the check for that image.
+    explanation: Not correct. The check runs in both modes.
+  - id: d
+    text: It deletes the policy after the first failure.
+    explanation: Not correct. Policies are never deleted by a failed check.
+  correct_option: a
+  explanation: Correct. The check still runs, but nothing is refused.
+- id: ats123-020-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Explain how authorities combine
+  source_readings:
+  - sections/section-020/module-01/course-02-key-authorities.md
+  prompt: A policy has two authorities. When does an image pass the policy?
+  options:
+  - id: a
+    text: Only when both authorities accept it.
+    explanation: Not correct. That would be an AND, which is not how authorities work.
+  - id: b
+    text: Only when the first authority accepts it.
+    explanation: Not correct. All authorities are tried, not only the first.
+  - id: c
+    text: When the majority of authorities accept it.
+    explanation: Not correct. There is no voting.
+  - id: d
+    text: When any one authority accepts it.
+    explanation: Correct. Authorities are alternatives.
+  correct_option: d
+  explanation: Correct. Authorities are alternatives.
+- id: ats123-020-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Repair a key policy
+  source_readings:
+  - sections/section-020/capstone/labs/lab-01/question.md
+  prompt: 'A `static` authority with `action: pass` is added to a key policy. What
+    is the effect?'
+  options:
+  - id: a
+    text: Every image passes the policy, so the key check means nothing.
+    explanation: Correct. An authority that always passes makes the others useless.
+  - id: b
+    text: Only images signed with the key pass.
+    explanation: Not correct. The static authority accepts images with no signature
+      too.
+  - id: c
+    text: Every image is refused.
+    explanation: Not correct. The action is `pass`.
+  - id: d
+    text: The policy switches to warn mode.
+    explanation: Not correct. The mode is a separate field.
+  correct_option: a
+  explanation: Correct. An authority that always passes makes the others useless.
