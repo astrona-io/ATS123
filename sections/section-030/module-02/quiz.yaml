@@ -1,0 +1,236 @@
+# Knowledge check. Listed in astrona.yaml as a `type: quiz` entry.
+schema_version: 1
+kind: question_bank
+id: ats123-030-02
+course_id: ATS123
+exam_code: SIGSTORE
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: module
+  id: module-02
+  title: "Keyless Identity Rules And Trust Roots"
+placement:
+  position: after
+  reading: sections/section-030/module-02/course-05-summary.md
+questions:
+- id: ats123-030-02-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Know the two halves"
+  source_readings:
+  - sections/section-030/module-02/course-01-narrowing-a-keyless-identity.md
+  prompt: "What two things does a keyless identity rule name?"
+  options:
+  - id: a
+    text: "The issuer and the subject"
+    explanation: "Correct. The issuer says who vouches for the identity. The subject says which identity signed."
+  - id: b
+    text: "The key and the password"
+    explanation: "Not correct. The issuer says who vouches for the identity. The subject says which identity signed."
+  - id: c
+    text: "The registry and the tag"
+    explanation: "Not correct. The issuer says who vouches for the identity. The subject says which identity signed."
+  - id: d
+    text: "The namespace and the label"
+    explanation: "Not correct. The issuer says who vouches for the identity. The subject says which identity signed."
+  correct_option: a
+  explanation: "Correct. The issuer says who vouches for the identity. The subject says which identity signed."
+- id: ats123-030-02-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Narrow a subject"
+  source_readings:
+  - sections/section-030/module-02/course-01-narrowing-a-keyless-identity.md
+  prompt: "Which subject is the narrowest rule for a release workflow?"
+  options:
+  - id: a
+    text: "The repository, the workflow file and the reference type"
+    explanation: "Correct. A narrow rule names the repository, the workflow file and the kind of Git reference."
+  - id: b
+    text: "Every workflow of the owner"
+    explanation: "Not correct. A narrow rule names the repository, the workflow file and the kind of Git reference."
+  - id: c
+    text: "Any subject from the issuer"
+    explanation: "Not correct. A narrow rule names the repository, the workflow file and the kind of Git reference."
+  - id: d
+    text: "Only the owner name"
+    explanation: "Not correct. A narrow rule names the repository, the workflow file and the kind of Git reference."
+  correct_option: a
+  explanation: "Correct. A narrow rule names the repository, the workflow file and the kind of Git reference."
+- id: ats123-030-02-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Test a pattern"
+  source_readings:
+  - sections/section-030/module-02/course-01-narrowing-a-keyless-identity.md
+  prompt: "How should you test an identity pattern before it reaches the cluster?"
+  options:
+  - id: a
+    text: "Check subjects that must match and subjects that must not match"
+    explanation: "Correct. A pattern must be tested against both kinds of sample subjects."
+  - id: b
+    text: "Apply it and watch the logs"
+    explanation: "Not correct. A pattern must be tested against both kinds of sample subjects."
+  - id: c
+    text: "Test only the valid subject"
+    explanation: "Not correct. A pattern must be tested against both kinds of sample subjects."
+  - id: d
+    text: "Skip testing for exact patterns"
+    explanation: "Not correct. A pattern must be tested against both kinds of sample subjects."
+  correct_option: a
+  explanation: "Correct. A pattern must be tested against both kinds of sample subjects."
+- id: ats123-030-02-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Several identities"
+  source_readings:
+  - sections/section-030/module-02/course-02-several-identities-and-authorities.md
+  prompt: "When can one keyless authority list several identities?"
+  options:
+  - id: a
+    text: "When they share one Fulcio and one set of logs"
+    explanation: "Correct. Several identities share trust. Use several authorities when the trust differs."
+  - id: b
+    text: "When they use different Fulcio instances"
+    explanation: "Not correct. Several identities share trust. Use several authorities when the trust differs."
+  - id: c
+    text: "When they use different keys"
+    explanation: "Not correct. Several identities share trust. Use several authorities when the trust differs."
+  - id: d
+    text: "Never"
+    explanation: "Not correct. Several identities share trust. Use several authorities when the trust differs."
+  correct_option: a
+  explanation: "Correct. Several identities share trust. Use several authorities when the trust differs."
+- id: ats123-030-02-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Name authorities"
+  source_readings:
+  - sections/section-030/module-02/course-02-several-identities-and-authorities.md
+  prompt: "Why give each authority a name?"
+  options:
+  - id: a
+    text: "The refusal message shows which rule failed"
+    explanation: "Correct. Names appear in the refusal message."
+  - id: b
+    text: "It is needed for signing"
+    explanation: "Not correct. Names appear in the refusal message."
+  - id: c
+    text: "It selects the key"
+    explanation: "Not correct. Names appear in the refusal message."
+  - id: d
+    text: "It sets the Rekor URL"
+    explanation: "Not correct. Names appear in the refusal message."
+  correct_option: a
+  explanation: "Correct. Names appear in the refusal message."
+- id: ats123-030-02-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Select the Rekor log"
+  source_readings:
+  - sections/section-030/module-02/course-03-transparency-logs-and-signature-formats.md
+  prompt: "Which field selects the Rekor transparency log of an authority?"
+  options:
+  - id: a
+    text: "ctlog"
+    explanation: "Correct. The ctlog field selects Rekor, not the certificate transparency log."
+  - id: b
+    text: "trustRootRef"
+    explanation: "Not correct. The ctlog field selects Rekor, not the certificate transparency log."
+  - id: c
+    text: "source"
+    explanation: "Not correct. The ctlog field selects Rekor, not the certificate transparency log."
+  - id: d
+    text: "match"
+    explanation: "Not correct. The ctlog field selects Rekor, not the certificate transparency log."
+  correct_option: a
+  explanation: "Correct. The ctlog field selects Rekor, not the certificate transparency log."
+- id: ats123-030-02-q07
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Skipping the log check"
+  source_readings:
+  - sections/section-030/module-02/course-03-transparency-logs-and-signature-formats.md
+  prompt: "What happens to the log check of a key authority that has no ctlog field?"
+  options:
+  - id: a
+    text: "It is skipped"
+    explanation: "Correct. Without ctlog the key authority does not check the transparency log."
+  - id: b
+    text: "It uses the public log"
+    explanation: "Not correct. Without ctlog the key authority does not check the transparency log."
+  - id: c
+    text: "It fails"
+    explanation: "Not correct. Without ctlog the key authority does not check the transparency log."
+  - id: d
+    text: "It is forced"
+    explanation: "Not correct. Without ctlog the key authority does not check the transparency log."
+  correct_option: a
+  explanation: "Correct. Without ctlog the key authority does not check the transparency log."
+- id: ats123-030-02-q08
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Signature format"
+  source_readings:
+  - sections/section-030/module-02/course-03-transparency-logs-and-signature-formats.md
+  prompt: "Which signature format does Policy Controller v0.15.1 read for key authorities?"
+  options:
+  - id: a
+    text: "The classic .sig format"
+    explanation: "Correct. Sign for key authorities with --new-bundle-format=false."
+  - id: b
+    text: "The Sigstore bundle format"
+    explanation: "Not correct. Sign for key authorities with --new-bundle-format=false."
+  - id: c
+    text: "Both formats"
+    explanation: "Not correct. Sign for key authorities with --new-bundle-format=false."
+  - id: d
+    text: "Neither format"
+    explanation: "Not correct. Sign for key authorities with --new-bundle-format=false."
+  correct_option: a
+  explanation: "Correct. Sign for key authorities with --new-bundle-format=false."
+- id: ats123-030-02-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Describe a private Sigstore"
+  source_readings:
+  - sections/section-030/module-02/course-04-trust-roots-for-a-private-sigstore.md
+  prompt: "Which resource describes the trust of a private Sigstore?"
+  options:
+  - id: a
+    text: "TrustRoot"
+    explanation: "Correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  - id: b
+    text: "ConfigMap"
+    explanation: "Not correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  - id: c
+    text: "ServiceAccount"
+    explanation: "Not correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  - id: d
+    text: "Secret of type tls"
+    explanation: "Not correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  correct_option: a
+  explanation: "Correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+- id: ats123-030-02-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Guard the trust root"
+  source_readings:
+  - sections/section-030/module-02/course-04-trust-roots-for-a-private-sigstore.md
+  prompt: "Why must edits to a TrustRoot be controlled tightly?"
+  options:
+  - id: a
+    text: "Whoever edits it decides who is trusted"
+    explanation: "Correct. A changed root can make an attacker's certificates trusted."
+  - id: b
+    text: "It stores pod logs"
+    explanation: "Not correct. A changed root can make an attacker's certificates trusted."
+  - id: c
+    text: "It changes the failure policy"
+    explanation: "Not correct. A changed root can make an attacker's certificates trusted."
+  - id: d
+    text: "It deletes signatures"
+    explanation: "Not correct. A changed root can make an attacker's certificates trusted."
+  correct_option: a
+  explanation: "Correct. A changed root can make an attacker's certificates trusted."

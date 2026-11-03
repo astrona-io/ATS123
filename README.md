@@ -27,10 +27,10 @@ contains:
 
 | Section | Title | Modules | Labs | Topic |
 | --- | --- | --- | --- | --- |
-| [010](sections/section-010) | How Policy Controller Works | 1 | 1 + capstone | Admission control |
-| [020](sections/section-020) | Key-Based Policies | 1 | 1 + capstone | Key policies |
-| [030](sections/section-030) | Keyless Policies And Identities | 1 | 1 + capstone | Keyless policies |
-| [040](sections/section-040) | Attestation Policies And Rollout | 1 | 1 + capstone | Attestations and rollout |
+| [010](sections/section-010) | How Policy Controller Works | 2 | 2 + capstone | Admission control |
+| [020](sections/section-020) | Key-Based Policies | 2 | 2 + capstone | Key policies |
+| [030](sections/section-030) | Keyless Policies And Identities | 2 | 2 + capstone | Keyless policies |
+| [040](sections/section-040) | Attestation Policies And Rollout | 3 | 3 + capstone | Attestations and rollout |
 
 The order follows how a team adopts Policy Controller: first the frame around
 every policy (opt-in, no-match, failure policy), then trust in a key, then
@@ -42,10 +42,15 @@ trust in an identity, and last statements about the build, rolled out safely.
 
 | Module | Reader | Parts | Labs |
 | --- | --- | --- | --- |
-| 010-01 | [Gate Images At Admission With Policy Controller](sections/section-010/module-01/course.md) | 2 | [lab-01](sections/section-010/module-01/labs/lab-01) |
-| 020-01 | [Require Images Signed With Your Key](sections/section-020/module-01/course.md) | 2 | [lab-01](sections/section-020/module-01/labs/lab-01) |
-| 030-01 | [Trust Signing Identities Instead Of Keys](sections/section-030/module-01/course.md) | 2 | [lab-01](sections/section-030/module-01/labs/lab-01) |
-| 040-01 | [Check Attestations And Roll Policies Out](sections/section-040/module-01/course.md) | 2 | [lab-01](sections/section-040/module-01/labs/lab-01) |
+| 010-01 | [Gate Images At Admission With Policy Controller](sections/section-010/module-01/course.md) | 4 | [lab-01](sections/section-010/module-01/labs/lab-01) |
+| 010-02 | [Install And Configure Policy Controller](sections/section-010/module-02/course.md) | 4 | [lab-01](sections/section-010/module-02/labs/lab-01) |
+| 020-01 | [Require Images Signed With Your Key](sections/section-020/module-01/course.md) | 4 | [lab-01](sections/section-020/module-01/labs/lab-01) |
+| 020-02 | [Design Key Policies For A Real Registry](sections/section-020/module-02/course.md) | 4 | [lab-01](sections/section-020/module-02/labs/lab-01) |
+| 030-01 | [Trust Signing Identities Instead Of Keys](sections/section-030/module-01/course.md) | 4 | [lab-01](sections/section-030/module-01/labs/lab-01) |
+| 030-02 | [Keyless Identity Rules And Trust Roots](sections/section-030/module-02/course.md) | 4 | [lab-01](sections/section-030/module-02/labs/lab-01) |
+| 040-01 | [Check Attestations And Roll Policies Out](sections/section-040/module-01/course.md) | 4 | [lab-01](sections/section-040/module-01/labs/lab-01) |
+| 040-02 | [Custom Attestations And Policy Languages](sections/section-040/module-02/course.md) | 4 | [lab-01](sections/section-040/module-02/labs/lab-01) |
+| 040-03 | [Rolling Policies Out And Operating Them](sections/section-040/module-03/course.md) | 4 | [lab-01](sections/section-040/module-03/labs/lab-01) |
 
 ---
 

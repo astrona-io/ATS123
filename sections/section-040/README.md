@@ -16,7 +16,7 @@ This section adds attestation checks to policies, and then covers the part that 
 
 ## The learning path
 
-The section has one module with a landing page, two short parts, a graded lab right after the first part, and a summary. The landing page starts the module's playground.
+The section has three modules. Each module has a landing page, four parts, a graded lab right after the part it tests, a summary and a knowledge check. Each module has its own playground, a cluster where you can explore freely, and the landing page starts it for you.
 
 ### 1. Check Attestations And Roll Policies Out
 
@@ -24,7 +24,29 @@ The playground has the key policy `inventory-signed`, two images signed with the
 
 1. Attestation Policies With CUE And Rego, followed by the lab **Require SLSA Provenance On Inventory Images**
 2. Rolling Out Policies And Reading Denials
-3. Summary
+3. Inspecting Attestations
+4. How Attestation Checks Are Evaluated
+5. Summary
+
+### 2. Custom Attestations And Policy Languages
+
+The playground has a key policy, signed images, and predicate files in the workstation pod.
+
+1. Custom Predicates And Statements
+2. Writing CUE Policies, followed by the lab **Require An Approved Review**
+3. Writing Rego Policies
+4. Combining Attestations
+5. Summary
+
+### 3. Rolling Policies Out And Operating Them
+
+The playground has one broad key policy for the registry, signed images from two teams, and `prod` opted in.
+
+1. Splitting Policies By Owner, followed by the lab **Split A Broad Policy By Team**
+2. Staged Rollouts With Warn Mode
+3. Policies As Code
+4. Monitoring The Webhook
+5. Summary
 
 ## Section capstone: Roll Out A Vulnerability Policy Safely
 

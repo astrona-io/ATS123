@@ -4,7 +4,7 @@ You can sign every image your team builds, and Kubernetes will still start an un
 
 Policy Controller is Sigstore's admission webhook for container images. It turns every image in a pod into a reference by digest, finds the `ClusterImagePolicy` resources that match it, and checks the signatures and attestations those policies require. Keep one sentence in mind: **Policy Controller only protects namespaces that opt in, and only while the API server refuses pods it cannot check.**
 
-The module has two parts. **Admission Webhooks And The Policy Controller Flow** follows one pod through the API server and the two webhooks, and shows how to ask for a decision with a server-side dry run. **Opting Namespaces In And Failing Closed** covers the three settings around every policy: the opt-in label, the no-match policy and the failure policy. A graded lab follows the second part.
+The module has four parts. **Admission Webhooks And The Policy Controller Flow** follows one pod through the API server and the two webhooks, and shows how to ask for a decision with a server-side dry run. **Opting Namespaces In And Failing Closed** covers the three settings around every policy: the opt-in label, the no-match policy and the failure policy. A graded lab follows the second part. **Workloads, Tags And Digests** shows which objects the webhooks check and how a tag becomes a digest, and **Reading An Admission Decision** takes an error message apart.
 
 ## Learning objectives
 

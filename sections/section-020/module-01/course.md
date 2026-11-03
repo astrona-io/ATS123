@@ -4,7 +4,7 @@ A release pipeline that signs its images gives you a simple, strong rule: run on
 
 Keep one sentence in mind: **a key policy trusts one public key for one set of image patterns, and the signature must belong to the digest that runs.** Both halves matter. The right key on the wrong image pattern protects nothing, and the wrong key refuses your own releases.
 
-The module has two parts. **Signing Images For The Cluster** signs an image by digest with the lab key pair, verifies it with `cosign verify`, and finds where the signature lives in the registry. **Key Authorities In A ClusterImagePolicy** writes the policy that trusts that key, explains image globs and the ways to give Policy Controller a public key, and compares `enforce` with `warn`. A graded lab follows the second part.
+The module has four parts. **Signing Images For The Cluster** signs an image by digest with the lab key pair, verifies it with `cosign verify`, and finds where the signature lives in the registry. **Key Authorities In A ClusterImagePolicy** writes the policy that trusts that key, explains image globs and the ways to give Policy Controller a public key, and compares `enforce` with `warn`. A graded lab follows the second part. **Key Pairs And Key Protection** covers what `cosign generate-key-pair` creates, how to get the public key back and how to protect the private key, and **Why A Signed Image Is Refused** is a checklist for the case where a signed image is refused anyway.
 
 ## Learning objectives
 

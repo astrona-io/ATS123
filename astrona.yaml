@@ -96,8 +96,57 @@ modules:
           - name: "Policy Controller installation"
             url: https://docs.sigstore.dev/policy-controller/installation/
       - type: reading
+        title: "Workloads, Tags And Digests"
+        path: sections/section-010/module-01/course-03-workloads-tags-and-digests.md
+      - type: reading
+        title: "Reading An Admission Decision"
+        path: sections/section-010/module-01/course-04-reading-an-admission-decision.md
+      - type: reading
         title: Summary
-        path: sections/section-010/module-01/course-03-summary.md
+        path: sections/section-010/module-01/course-05-summary.md
+
+      - type: reading
+        title: "Install And Configure Policy Controller"
+        path: sections/section-010/module-02/course.md
+      - type: reading
+        title: "What The Chart Installs"
+        path: sections/section-010/module-02/course-01-what-the-chart-installs.md
+      - type: reading
+        title: "Chart Values And Configuration Data"
+        path: sections/section-010/module-02/course-02-chart-values-and-configuration-data.md
+      - type: reading
+        title: Question
+        path: sections/section-010/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Make A Setting Stick In The Helm Release Lab"
+        path: sections/section-010/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 20m
+        topic: admission
+        task_kind: troubleshooting
+        tags: [policy-controller, admission-webhook, no-match-policy, failure-policy, dry-run]
+        learning_goals:
+          - Read the values of a Helm release and the ConfigMap they produce
+          - Restore the safe no-match policy in the release without losing other values
+          - Prove with a dry run that an image no policy matches is refused
+        resources:
+          - name: "Policy Controller installation"
+            url: https://docs.sigstore.dev/policy-controller/installation/
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+      - type: reading
+        title: "Registries, Certificates And Pull Secrets"
+        path: sections/section-010/module-02/course-03-registries-certificates-and-pull-secrets.md
+      - type: reading
+        title: "Upgrades, Availability And Removal"
+        path: sections/section-010/module-02/course-04-upgrades-availability-and-removal.md
+      - type: reading
+        title: Summary
+        path: sections/section-010/module-02/course-05-summary.md
+      - type: quiz
+        title: "Knowledge Check: Install And Configure Policy Controller"
+        path: sections/section-010/module-02/quiz.yaml
+        pass_score: 70
 
       - type: reading
         title: Question
@@ -166,8 +215,57 @@ modules:
           - name: "Signing containers with cosign"
             url: https://docs.sigstore.dev/cosign/signing/signing_with_containers/
       - type: reading
+        title: "Key Pairs And Key Protection"
+        path: sections/section-020/module-01/course-03-key-pairs-and-protection.md
+      - type: reading
+        title: "Why A Signed Image Is Refused"
+        path: sections/section-020/module-01/course-04-why-a-signed-image-is-refused.md
+      - type: reading
         title: Summary
-        path: sections/section-020/module-01/course-03-summary.md
+        path: sections/section-020/module-01/course-05-summary.md
+
+      - type: reading
+        title: "Design Key Policies For A Real Registry"
+        path: sections/section-020/module-02/course.md
+      - type: reading
+        title: "Choosing Image Patterns"
+        path: sections/section-020/module-02/course-01-choosing-image-patterns.md
+      - type: reading
+        title: "Several Authorities And Several Policies"
+        path: sections/section-020/module-02/course-02-several-authorities-and-policies.md
+      - type: reading
+        title: Question
+        path: sections/section-020/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Rotate The Signing Key Without Refusing Old Releases Lab"
+        path: sections/section-020/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: key-policy
+        task_kind: build
+        tags: [clusterimagepolicy, key-authority, image-glob, cosign-sign, dry-run]
+        learning_goals:
+          - Add an authority for the new key next to the old one
+          - Prove that releases signed with either key are admitted
+          - Prove that an image signed with an unapproved key is refused
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Signing containers with cosign"
+            url: https://docs.sigstore.dev/cosign/signing/signing_with_containers/
+      - type: reading
+        title: "Signatures In Another Repository"
+        path: sections/section-020/module-02/course-03-signatures-in-another-repository.md
+      - type: reading
+        title: "Limiting A Policy To Some Resources"
+        path: sections/section-020/module-02/course-04-limiting-a-policy-to-some-resources.md
+      - type: reading
+        title: Summary
+        path: sections/section-020/module-02/course-05-summary.md
+      - type: quiz
+        title: "Knowledge Check: Design Key Policies For A Real Registry"
+        path: sections/section-020/module-02/quiz.yaml
+        pass_score: 70
 
       - type: reading
         title: Question
@@ -237,8 +335,57 @@ modules:
           - name: "OIDC verification cheat sheet"
             url: https://docs.sigstore.dev/quickstart/verification-cheat-sheet/
       - type: reading
+        title: "Inside A Fulcio Certificate"
+        path: sections/section-030/module-01/course-03-inside-a-fulcio-certificate.md
+      - type: reading
+        title: "Identity Providers And Subjects"
+        path: sections/section-030/module-01/course-04-identity-providers-and-subjects.md
+      - type: reading
         title: Summary
-        path: sections/section-030/module-01/course-03-summary.md
+        path: sections/section-030/module-01/course-05-summary.md
+
+      - type: reading
+        title: "Keyless Identity Rules And Trust Roots"
+        path: sections/section-030/module-02/course.md
+      - type: reading
+        title: "Narrowing A Keyless Identity"
+        path: sections/section-030/module-02/course-01-narrowing-a-keyless-identity.md
+      - type: reading
+        title: Question
+        path: sections/section-030/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Narrow A Keyless Identity Pattern Lab"
+        path: sections/section-030/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 20m
+        topic: keyless-policy
+        task_kind: troubleshooting
+        tags: [clusterimagepolicy, keyless-authority, identity, fulcio, dry-run]
+        learning_goals:
+          - Test an identity expression against subjects that must and must not match
+          - Narrow a loose pattern to one release workflow on tags
+          - Prove that the release image is still admitted
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Keyless signing with cosign"
+            url: https://docs.sigstore.dev/cosign/signing/overview/
+      - type: reading
+        title: "Several Identities And Several Authorities"
+        path: sections/section-030/module-02/course-02-several-identities-and-authorities.md
+      - type: reading
+        title: "Transparency Logs And Signature Formats"
+        path: sections/section-030/module-02/course-03-transparency-logs-and-signature-formats.md
+      - type: reading
+        title: "Trust Roots For A Private Sigstore"
+        path: sections/section-030/module-02/course-04-trust-roots-for-a-private-sigstore.md
+      - type: reading
+        title: Summary
+        path: sections/section-030/module-02/course-05-summary.md
+      - type: quiz
+        title: "Knowledge Check: Keyless Identity Rules And Trust Roots"
+        path: sections/section-030/module-02/quiz.yaml
+        pass_score: 70
 
       - type: reading
         title: Question
@@ -309,8 +456,100 @@ modules:
         title: "Rolling Out Policies And Reading Denials"
         path: sections/section-040/module-01/course-02-rolling-out-and-debugging.md
       - type: reading
+        title: "Inspecting Attestations"
+        path: sections/section-040/module-01/course-03-inspecting-attestations.md
+      - type: reading
+        title: "How Attestation Checks Are Evaluated"
+        path: sections/section-040/module-01/course-04-how-attestation-checks-are-evaluated.md
+      - type: reading
         title: Summary
-        path: sections/section-040/module-01/course-03-summary.md
+        path: sections/section-040/module-01/course-05-summary.md
+
+      - type: reading
+        title: "Custom Attestations And Policy Languages"
+        path: sections/section-040/module-02/course.md
+      - type: reading
+        title: "Custom Predicates And Statements"
+        path: sections/section-040/module-02/course-01-custom-predicates-and-statements.md
+      - type: reading
+        title: "Writing CUE Policies"
+        path: sections/section-040/module-02/course-02-writing-cue-policies.md
+      - type: reading
+        title: Question
+        path: sections/section-040/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Require An Approved Review Lab"
+        path: sections/section-040/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: attestation-policy
+        task_kind: build
+        tags: [attestation, cue, cosign-attest, key-authority, clusterimagepolicy, dry-run]
+        learning_goals:
+          - Require a custom review attestation with a CUE policy
+          - Prove that a rejected review and a missing review are refused
+          - Keep the key authority and the safe settings unchanged
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Verifying attestations"
+            url: https://docs.sigstore.dev/cosign/verifying/attestation/
+      - type: reading
+        title: "Writing Rego Policies"
+        path: sections/section-040/module-02/course-03-writing-rego-policies.md
+      - type: reading
+        title: "Combining Attestations"
+        path: sections/section-040/module-02/course-04-combining-attestations.md
+      - type: reading
+        title: Summary
+        path: sections/section-040/module-02/course-05-summary.md
+      - type: quiz
+        title: "Knowledge Check: Custom Attestations And Policy Languages"
+        path: sections/section-040/module-02/quiz.yaml
+        pass_score: 70
+
+      - type: reading
+        title: "Rolling Policies Out And Operating Them"
+        path: sections/section-040/module-03/course.md
+      - type: reading
+        title: "Splitting Policies By Owner"
+        path: sections/section-040/module-03/course-01-splitting-policies-by-owner.md
+      - type: reading
+        title: Question
+        path: sections/section-040/module-03/labs/lab-01/question.md
+      - type: lab
+        title: "Split A Broad Policy By Team Lab"
+        path: sections/section-040/module-03/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 30m
+        topic: rollout
+        task_kind: build
+        tags: [clusterimagepolicy, key-authority, image-glob, warn-mode, dry-run]
+        learning_goals:
+          - Replace one broad policy with one policy per team
+          - Trust only the team key in each repository
+          - Prove that a key does not work in another team repository
+        resources:
+          - name: "Policy Controller overview"
+            url: https://docs.sigstore.dev/policy-controller/overview/
+          - name: "Verifying attestations"
+            url: https://docs.sigstore.dev/cosign/verifying/attestation/
+      - type: reading
+        title: "Staged Rollouts With Warn Mode"
+        path: sections/section-040/module-03/course-02-staged-rollouts-with-warn-mode.md
+      - type: reading
+        title: "Policies As Code"
+        path: sections/section-040/module-03/course-03-policies-as-code.md
+      - type: reading
+        title: "Monitoring The Webhook"
+        path: sections/section-040/module-03/course-04-monitoring-the-webhook.md
+      - type: reading
+        title: Summary
+        path: sections/section-040/module-03/course-05-summary.md
+      - type: quiz
+        title: "Knowledge Check: Rolling Policies Out And Operating Them"
+        path: sections/section-040/module-03/quiz.yaml
+        pass_score: 70
 
       - type: reading
         title: Question

@@ -1,0 +1,236 @@
+# Knowledge check. Listed in astrona.yaml as a `type: quiz` entry.
+schema_version: 1
+kind: question_bank
+id: ats123-040-03
+course_id: ATS123
+exam_code: SIGSTORE
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: module
+  id: module-03
+  title: "Rolling Policies Out And Operating Them"
+placement:
+  position: after
+  reading: sections/section-040/module-03/course-05-summary.md
+questions:
+- id: ats123-040-03-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Spot the risk of a broad policy"
+  source_readings:
+  - sections/section-040/module-03/course-01-splitting-policies-by-owner.md
+  prompt: "What is the main problem with one broad policy for a whole registry?"
+  options:
+  - id: a
+    text: "One key must be trusted everywhere"
+    explanation: "Correct. A broad policy forces one key to be trusted for all repositories."
+  - id: b
+    text: "It cannot use globs"
+    explanation: "Not correct. A broad policy forces one key to be trusted for all repositories."
+  - id: c
+    text: "It cannot use warn mode"
+    explanation: "Not correct. A broad policy forces one key to be trusted for all repositories."
+  - id: d
+    text: "It needs no key"
+    explanation: "Not correct. A broad policy forces one key to be trusted for all repositories."
+  correct_option: a
+  explanation: "Correct. A broad policy forces one key to be trusted for all repositories."
+- id: ats123-040-03-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Split by owner"
+  source_readings:
+  - sections/section-040/module-03/course-01-splitting-policies-by-owner.md
+  prompt: "What does a policy per team contain?"
+  options:
+  - id: a
+    text: "The team's glob and the team's key"
+    explanation: "Correct. Each team policy limits the key to the team's repositories."
+  - id: b
+    text: "All keys of the company"
+    explanation: "Not correct. Each team policy limits the key to the team's repositories."
+  - id: c
+    text: "A catch-all glob"
+    explanation: "Not correct. Each team policy limits the key to the team's repositories."
+  - id: d
+    text: "The no-match policy"
+    explanation: "Not correct. Each team policy limits the key to the team's repositories."
+  correct_option: a
+  explanation: "Correct. Each team policy limits the key to the team's repositories."
+- id: ats123-040-03-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Order of changes"
+  source_readings:
+  - sections/section-040/module-03/course-01-splitting-policies-by-owner.md
+  prompt: "In which order do you replace a broad policy?"
+  options:
+  - id: a
+    text: "Apply the new policies, test, then delete the old one"
+    explanation: "Correct. Applying first leaves no time without enforcement."
+  - id: b
+    text: "Delete the old one, then apply the new ones"
+    explanation: "Not correct. Applying first leaves no time without enforcement."
+  - id: c
+    text: "Edit the old one in place"
+    explanation: "Not correct. Applying first leaves no time without enforcement."
+  - id: d
+    text: "Disable the webhook first"
+    explanation: "Not correct. Applying first leaves no time without enforcement."
+  correct_option: a
+  explanation: "Correct. Applying first leaves no time without enforcement."
+- id: ats123-040-03-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Test cross-team use"
+  source_readings:
+  - sections/section-040/module-03/course-01-splitting-policies-by-owner.md
+  prompt: "Which test proves that the split works?"
+  options:
+  - id: a
+    text: "A team's key must not be accepted in another team's repository"
+    explanation: "Correct. The point is that keys no longer work outside their prefix."
+  - id: b
+    text: "All images pass"
+    explanation: "Not correct. The point is that keys no longer work outside their prefix."
+  - id: c
+    text: "No image passes"
+    explanation: "Not correct. The point is that keys no longer work outside their prefix."
+  - id: d
+    text: "The webhook restarts"
+    explanation: "Not correct. The point is that keys no longer work outside their prefix."
+  correct_option: a
+  explanation: "Correct. The point is that keys no longer work outside their prefix."
+- id: ats123-040-03-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Use warn mode"
+  source_readings:
+  - sections/section-040/module-03/course-02-staged-rollouts-with-warn-mode.md
+  prompt: "What does warn mode do when a policy fails?"
+  options:
+  - id: a
+    text: "It admits the request and returns a warning"
+    explanation: "Correct. Warn mode shows what enforcement would refuse."
+  - id: b
+    text: "It refuses the request"
+    explanation: "Not correct. Warn mode shows what enforcement would refuse."
+  - id: c
+    text: "It deletes the pod"
+    explanation: "Not correct. Warn mode shows what enforcement would refuse."
+  - id: d
+    text: "It disables the webhook"
+    explanation: "Not correct. Warn mode shows what enforcement would refuse."
+  correct_option: a
+  explanation: "Correct. Warn mode shows what enforcement would refuse."
+- id: ats123-040-03-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Staged rollout order"
+  source_readings:
+  - sections/section-040/module-03/course-02-staged-rollouts-with-warn-mode.md
+  prompt: "Which order is a safe staged rollout?"
+  options:
+  - id: a
+    text: "Warn in test, warn in production, enforce in test, enforce everywhere"
+    explanation: "Correct. Each stage ends when the warnings show only what you intended to refuse."
+  - id: b
+    text: "Enforce everywhere at once"
+    explanation: "Not correct. Each stage ends when the warnings show only what you intended to refuse."
+  - id: c
+    text: "Enforce in production first"
+    explanation: "Not correct. Each stage ends when the warnings show only what you intended to refuse."
+  - id: d
+    text: "Enforce in test, then warn"
+    explanation: "Not correct. Each stage ends when the warnings show only what you intended to refuse."
+  correct_option: a
+  explanation: "Correct. Each stage ends when the warnings show only what you intended to refuse."
+- id: ats123-040-03-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Emergency step"
+  source_readings:
+  - sections/section-040/module-03/course-02-staged-rollouts-with-warn-mode.md
+  prompt: "What does removing the opt-in label from a namespace do?"
+  options:
+  - id: a
+    text: "It stops all checks in that namespace"
+    explanation: "Correct. It is an emergency step, because every image is then admitted there."
+  - id: b
+    text: "It enforces warn mode"
+    explanation: "Not correct. It is an emergency step, because every image is then admitted there."
+  - id: c
+    text: "It deletes the policies"
+    explanation: "Not correct. It is an emergency step, because every image is then admitted there."
+  - id: d
+    text: "It rotates keys"
+    explanation: "Not correct. It is an emergency step, because every image is then admitted there."
+  correct_option: a
+  explanation: "Correct. It is an emergency step, because every image is then admitted there."
+- id: ats123-040-03-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Policies as code"
+  source_readings:
+  - sections/section-040/module-03/course-03-policies-as-code.md
+  prompt: "What belongs in the review of a policy change?"
+  options:
+  - id: a
+    text: "A server-side dry run of each file and sample images with expected results"
+    explanation: "Correct. Dry runs and sample images show that the change behaves as expected."
+  - id: b
+    text: "Only the YAML syntax"
+    explanation: "Not correct. Dry runs and sample images show that the change behaves as expected."
+  - id: c
+    text: "Nothing, policies are config"
+    explanation: "Not correct. Dry runs and sample images show that the change behaves as expected."
+  - id: d
+    text: "The cluster node list"
+    explanation: "Not correct. Dry runs and sample images show that the change behaves as expected."
+  correct_option: a
+  explanation: "Correct. Dry runs and sample images show that the change behaves as expected."
+- id: ats123-040-03-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Availability"
+  source_readings:
+  - sections/section-040/module-03/course-04-monitoring-the-webhook.md
+  prompt: "Why does the webhook need a disruption budget?"
+  options:
+  - id: a
+    text: "Voluntary disruptions must not take all replicas down"
+    explanation: "Correct. With failure policy Fail, no replicas means refused deployments."
+  - id: b
+    text: "It speeds up verification"
+    explanation: "Not correct. With failure policy Fail, no replicas means refused deployments."
+  - id: c
+    text: "It rotates keys"
+    explanation: "Not correct. With failure policy Fail, no replicas means refused deployments."
+  - id: d
+    text: "It stores policies"
+    explanation: "Not correct. With failure policy Fail, no replicas means refused deployments."
+  correct_option: a
+  explanation: "Correct. With failure policy Fail, no replicas means refused deployments."
+- id: ats123-040-03-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Watch the webhook"
+  source_readings:
+  - sections/section-040/module-03/course-04-monitoring-the-webhook.md
+  prompt: "What is a sign that the webhook is a problem rather than a policy?"
+  options:
+  - id: a
+    text: "Deployments fail with a timeout or an error that names no policy"
+    explanation: "Correct. A refusal without a policy name or a timeout points to the webhook."
+  - id: b
+    text: "A refusal names a policy"
+    explanation: "Not correct. A refusal without a policy name or a timeout points to the webhook."
+  - id: c
+    text: "A warning appears"
+    explanation: "Not correct. A refusal without a policy name or a timeout points to the webhook."
+  - id: d
+    text: "An image is admitted"
+    explanation: "Not correct. A refusal without a policy name or a timeout points to the webhook."
+  correct_option: a
+  explanation: "Correct. A refusal without a policy name or a timeout points to the webhook."

@@ -17,7 +17,7 @@ This section explains the path a pod takes through Policy Controller and the set
 
 ## The learning path
 
-The section has one module. It has a landing page, two short parts, a graded lab right after the part it tests, and a summary. The module has its own playground, a cluster where you can explore freely, and the landing page starts it for you.
+The section has two modules. Each module has a landing page, four parts, a graded lab right after the part it tests, a summary and a knowledge check. Each module has its own playground, a cluster where you can explore freely, and the landing page starts it for you.
 
 ### 1. Gate Images At Admission With Policy Controller
 
@@ -25,7 +25,19 @@ The playground has Policy Controller running, the key-based policy `inventory-si
 
 1. Admission Webhooks And The Policy Controller Flow
 2. Opting Namespaces In And Failing Closed, followed by the lab **Enforce Signatures In The prod Namespace**
-3. Summary
+3. Workloads, Tags And Digests
+4. Reading An Admission Decision
+5. Summary
+
+### 2. Install And Configure Policy Controller
+
+The playground has Policy Controller installed from the Helm release `policy-controller`, the signed image in the lab registry, and a workstation pod with the tools.
+
+1. What The Chart Installs
+2. Chart Values And Configuration Data, followed by the lab **Make A Setting Stick In The Helm Release**
+3. Registries, Certificates And Pull Secrets
+4. Upgrades, Availability And Removal
+5. Summary
 
 ## Section capstone: Restore Enforcement After An Outage
 

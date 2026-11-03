@@ -1,0 +1,236 @@
+# Knowledge check. Listed in astrona.yaml as a `type: quiz` entry.
+schema_version: 1
+kind: question_bank
+id: ats123-020-02
+course_id: ATS123
+exam_code: SIGSTORE
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: module
+  id: module-02
+  title: "Design Key Policies For A Real Registry"
+placement:
+  position: after
+  reading: sections/section-020/module-02/course-05-summary.md
+questions:
+- id: ats123-020-02-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Read an image glob"
+  source_readings:
+  - sections/section-020/module-02/course-01-choosing-image-patterns.md
+  prompt: "In an image glob, what does a single star match?"
+  options:
+  - id: a
+    text: "Any characters up to the next slash"
+    explanation: "Correct. A single star stops at a slash. A double star does not."
+  - id: b
+    text: "Any characters including slashes"
+    explanation: "Not correct. A single star stops at a slash. A double star does not."
+  - id: c
+    text: "Exactly one character"
+    explanation: "Not correct. A single star stops at a slash. A double star does not."
+  - id: d
+    text: "Only the tag"
+    explanation: "Not correct. A single star stops at a slash. A double star does not."
+  correct_option: a
+  explanation: "Correct. A single star stops at a slash. A double star does not."
+- id: ats123-020-02-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Use the double star"
+  source_readings:
+  - sections/section-020/module-02/course-01-choosing-image-patterns.md
+  prompt: "Which glob matches every image in every repository below one registry host?"
+  options:
+  - id: a
+    text: "registry.example.com/**"
+    explanation: "Correct. The double star crosses slashes. The registry name must match exactly."
+  - id: b
+    text: "registry.example.com/*"
+    explanation: "Not correct. The double star crosses slashes. The registry name must match exactly."
+  - id: c
+    text: "*/**"
+    explanation: "Not correct. The double star crosses slashes. The registry name must match exactly."
+  - id: d
+    text: "registry.example.com"
+    explanation: "Not correct. The double star crosses slashes. The registry name must match exactly."
+  correct_option: a
+  explanation: "Correct. The double star crosses slashes. The registry name must match exactly."
+- id: ats123-020-02-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Limit a key to a team"
+  source_readings:
+  - sections/section-020/module-02/course-02-several-authorities-and-policies.md
+  prompt: "Why write one policy per team instead of one policy for the whole registry?"
+  options:
+  - id: a
+    text: "Each key is trusted only for its own prefix"
+    explanation: "Correct. A narrow glob with the team key means that key does not work in another team's repository."
+  - id: b
+    text: "Policies run faster"
+    explanation: "Not correct. A narrow glob with the team key means that key does not work in another team's repository."
+  - id: c
+    text: "Cosign requires it"
+    explanation: "Not correct. A narrow glob with the team key means that key does not work in another team's repository."
+  - id: d
+    text: "It removes the need for namespace labels"
+    explanation: "Not correct. A narrow glob with the team key means that key does not work in another team's repository."
+  correct_option: a
+  explanation: "Correct. A narrow glob with the team key means that key does not work in another team's repository."
+- id: ats123-020-02-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Use a catch-all that refuses"
+  source_readings:
+  - sections/section-020/module-02/course-02-several-authorities-and-policies.md
+  prompt: "What does a catch-all policy with a static authority of action fail give you?"
+  options:
+  - id: a
+    text: "A refusal that names the policy for registries you want blocked"
+    explanation: "Correct. The error names the policy, which is clearer than the no-match policy message."
+  - id: b
+    text: "Faster admission for signed images"
+    explanation: "Not correct. The error names the policy, which is clearer than the no-match policy message."
+  - id: c
+    text: "Automatic key rotation"
+    explanation: "Not correct. The error names the policy, which is clearer than the no-match policy message."
+  - id: d
+    text: "A warning instead of a refusal"
+    explanation: "Not correct. The error names the policy, which is clearer than the no-match policy message."
+  correct_option: a
+  explanation: "Correct. The error names the policy, which is clearer than the no-match policy message."
+- id: ats123-020-02-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Authorities in one policy"
+  source_readings:
+  - sections/section-020/module-02/course-02-several-authorities-and-policies.md
+  prompt: "Two authorities are listed in one policy. When is an image admitted?"
+  options:
+  - id: a
+    text: "When any one authority accepts it"
+    explanation: "Correct. Authorities in one policy are alternatives."
+  - id: b
+    text: "Only when both accept it"
+    explanation: "Not correct. Authorities in one policy are alternatives."
+  - id: c
+    text: "Only when the first accepts it"
+    explanation: "Not correct. Authorities in one policy are alternatives."
+  - id: d
+    text: "Never"
+    explanation: "Not correct. Authorities in one policy are alternatives."
+  correct_option: a
+  explanation: "Correct. Authorities in one policy are alternatives."
+- id: ats123-020-02-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Policies for one image"
+  source_readings:
+  - sections/section-020/module-02/course-02-several-authorities-and-policies.md
+  prompt: "Two policies match one image. When is the image admitted?"
+  options:
+  - id: a
+    text: "When it passes both policies"
+    explanation: "Correct. All policies that match an image must pass."
+  - id: b
+    text: "When it passes either policy"
+    explanation: "Not correct. All policies that match an image must pass."
+  - id: c
+    text: "When it passes the older policy"
+    explanation: "Not correct. All policies that match an image must pass."
+  - id: d
+    text: "When the namespace is labeled"
+    explanation: "Not correct. All policies that match an image must pass."
+  correct_option: a
+  explanation: "Correct. All policies that match an image must pass."
+- id: ats123-020-02-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Rotate a key"
+  source_readings:
+  - sections/section-020/module-02/course-02-several-authorities-and-policies.md
+  prompt: "What is the first step of a key rotation that keeps old releases running?"
+  options:
+  - id: a
+    text: "List the old and the new key as two authorities"
+    explanation: "Correct. Both keys are accepted during the rotation. The old authority is removed at the end."
+  - id: b
+    text: "Replace the old key with the new key"
+    explanation: "Not correct. Both keys are accepted during the rotation. The old authority is removed at the end."
+  - id: c
+    text: "Delete the policy"
+    explanation: "Not correct. Both keys are accepted during the rotation. The old authority is removed at the end."
+  - id: d
+    text: "Re-sign nothing and wait"
+    explanation: "Not correct. Both keys are accepted during the rotation. The old authority is removed at the end."
+  correct_option: a
+  explanation: "Correct. Both keys are accepted during the rotation. The old authority is removed at the end."
+- id: ats123-020-02-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Signature location"
+  source_readings:
+  - sections/section-020/module-02/course-03-signatures-in-another-repository.md
+  prompt: "An authority has source pointing at another repository. Where must the signer write signatures?"
+  options:
+  - id: a
+    text: "To that repository, for example with COSIGN_REPOSITORY"
+    explanation: "Correct. The location used by the signer must match the source of the authority."
+  - id: b
+    text: "To the image repository"
+    explanation: "Not correct. The location used by the signer must match the source of the authority."
+  - id: c
+    text: "To the namespace"
+    explanation: "Not correct. The location used by the signer must match the source of the authority."
+  - id: d
+    text: "To the Helm release"
+    explanation: "Not correct. The location used by the signer must match the source of the authority."
+  correct_option: a
+  explanation: "Correct. The location used by the signer must match the source of the authority."
+- id: ats123-020-02-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Scope of match"
+  source_readings:
+  - sections/section-020/module-02/course-04-limiting-a-policy-to-some-resources.md
+  prompt: "What is the match field of a ClusterImagePolicy for?"
+  options:
+  - id: a
+    text: "Limiting the policy to resource kinds and labels"
+    explanation: "Correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  - id: b
+    text: "Selecting the signing key"
+    explanation: "Not correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  - id: c
+    text: "Setting the failure policy"
+    explanation: "Not correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  - id: d
+    text: "Choosing the Rekor log"
+    explanation: "Not correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  correct_option: a
+  explanation: "Correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+- id: ats123-020-02-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "When to drop the old key"
+  source_readings:
+  - sections/section-020/module-02/course-02-several-authorities-and-policies.md
+  prompt: "When is it safe to remove the old key authority after a rotation?"
+  options:
+  - id: a
+    text: "When nothing that you run depends on it"
+    explanation: "Correct. Keep the old authority until no running workload needs it."
+  - id: b
+    text: "Immediately after adding the new key"
+    explanation: "Not correct. Keep the old authority until no running workload needs it."
+  - id: c
+    text: "After one day"
+    explanation: "Not correct. Keep the old authority until no running workload needs it."
+  - id: d
+    text: "Never"
+    explanation: "Not correct. Keep the old authority until no running workload needs it."
+  correct_option: a
+  explanation: "Correct. Keep the old authority until no running workload needs it."

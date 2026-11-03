@@ -18,7 +18,7 @@ This section builds that rule end to end. You sign images with a cosign key pair
 
 ## The learning path
 
-The section has one module with a landing page, two short parts, a graded lab right after the second part, and a summary. The landing page starts the module's playground.
+The section has two modules. Each module has a landing page, four parts, a graded lab right after the part it tests, a summary and a knowledge check. Each module has its own playground, a cluster where you can explore freely, and the landing page starts it for you.
 
 ### 1. Require Images Signed With Your Key
 
@@ -26,7 +26,19 @@ The playground has Policy Controller running with no policy, `prod` opted in, an
 
 1. Signing Images For The Cluster
 2. Key Authorities In A ClusterImagePolicy, followed by the lab **Write A Key-Based Image Policy**
-3. Summary
+3. Key Pairs And Key Protection
+4. Why A Signed Image Is Refused
+5. Summary
+
+### 2. Design Key Policies For A Real Registry
+
+The playground has Policy Controller running with a key policy, the lab key pair, and signed and unsigned images in the lab registry.
+
+1. Choosing Image Patterns
+2. Several Authorities And Several Policies, followed by the lab **Rotate The Signing Key Without Refusing Old Releases**
+3. Signatures In Another Repository
+4. Limiting A Policy To Some Resources
+5. Summary
 
 ## Section capstone: Repair A Key Policy That Lets Everything Through
 

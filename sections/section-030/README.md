@@ -17,7 +17,7 @@ This section teaches Policy Controller to trust identities instead of keys. You 
 
 ## The learning path
 
-The section has one module with a landing page, two short parts, a graded lab right after the second part, and a summary. The landing page starts the module's playground.
+The section has two modules. Each module has a landing page, four parts, a graded lab right after the part it tests, a summary and a knowledge check. Each module has its own playground, a cluster where you can explore freely, and the landing page starts it for you.
 
 ### 1. Trust Signing Identities Instead Of Keys
 
@@ -25,7 +25,19 @@ The playground has Policy Controller running with no policy, `prod` opted in, an
 
 1. Keyless Signatures And The Identity In The Certificate
 2. Keyless Authorities, Identities And Trust Roots, followed by the lab **Require Images Signed By The podinfo Release Workflow**
-3. Summary
+3. Inside A Fulcio Certificate
+4. Identity Providers And Subjects
+5. Summary
+
+### 2. Keyless Identity Rules And Trust Roots
+
+The playground has Policy Controller running and a workstation pod with the tools. The examples use the public podinfo release image that GitHub Actions signed keylessly.
+
+1. Narrowing A Keyless Identity, followed by the lab **Narrow A Keyless Identity Pattern**
+2. Several Identities And Several Authorities
+3. Transparency Logs And Signature Formats
+4. Trust Roots For A Private Sigstore
+5. Summary
 
 ## Section capstone: Fix A Keyless Policy That Trusts Too Much
 

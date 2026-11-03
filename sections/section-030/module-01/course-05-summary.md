@@ -8,6 +8,8 @@ A keyless signature starts with an OpenID Connect identity token, for example th
 
 A keyless authority in a `ClusterImagePolicy` names the Fulcio instance with `url` and the allowed `identities`, each with an issuer and a subject or their regular expression forms. The image must have a signature with a certificate that chains to a trusted root, a transparency log entry, and a matching identity. Images signed by cosign v3 use the Sigstore bundle format, which Policy Controller v0.15.1 cannot verify for image signatures yet; it verifies images signed in the classic format, such as podinfo 6.10.0.
 
+The Fulcio certificate holds the issuer, the subject, a public key and a validity of a few minutes; the logs make the signature checkable after the certificate has expired. Each provider writes a different subject, so a subject expression is written and tested for the provider that signs, and it names the repository, the workflow file and the Git reference as narrowly as the use allows.
+
 The identity is the whole security of a keyless policy. Anchor every regular expression with `^` and `$`, escape the dots, and leave only the release tag free. Cover the whole registry with the glob, so images from other projects are checked and refused, not handed to the no-match policy. Private Sigstore instances are trusted through a `TrustRoot` resource that the authority names with `trustRootRef`. The key facts to remember are these:
 
 - The issuer for GitHub Actions is `https://token.actions.githubusercontent.com`.

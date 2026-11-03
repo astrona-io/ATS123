@@ -1,0 +1,236 @@
+# Knowledge check. Listed in astrona.yaml as a `type: quiz` entry.
+schema_version: 1
+kind: question_bank
+id: ats123-010-02
+course_id: ATS123
+exam_code: SIGSTORE
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: module
+  id: module-02
+  title: "Install And Configure Policy Controller"
+placement:
+  position: after
+  reading: sections/section-010/module-02/course-05-summary.md
+questions:
+- id: ats123-010-02-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Name the custom resources the chart creates"
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-chart-installs.md
+  prompt: "Which two custom resource kinds does the Policy Controller chart create?"
+  options:
+  - id: a
+    text: "ClusterImagePolicy and TrustRoot"
+    explanation: "Correct. The chart installs the ClusterImagePolicy and TrustRoot kinds."
+  - id: b
+    text: "ImagePolicy and SignatureRule"
+    explanation: "Not correct. The chart installs the ClusterImagePolicy and TrustRoot kinds."
+  - id: c
+    text: "CosignKey and Authority"
+    explanation: "Not correct. The chart installs the ClusterImagePolicy and TrustRoot kinds."
+  - id: d
+    text: "AdmissionRule and Registry"
+    explanation: "Not correct. The chart installs the ClusterImagePolicy and TrustRoot kinds."
+  correct_option: a
+  explanation: "Correct. The chart installs the ClusterImagePolicy and TrustRoot kinds."
+- id: ats123-010-02-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Find where settings live"
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-chart-installs.md
+  prompt: "Which ConfigMap holds the settings of the webhook that you set through the Helm release?"
+  options:
+  - id: a
+    text: "config-policy-controller"
+    explanation: "Correct. config-policy-controller holds the settings. The webhook writes config-image-policies itself."
+  - id: b
+    text: "config-image-policies"
+    explanation: "Not correct. config-policy-controller holds the settings. The webhook writes config-image-policies itself."
+  - id: c
+    text: "kube-root-ca.crt"
+    explanation: "Not correct. config-policy-controller holds the settings. The webhook writes config-image-policies itself."
+  - id: d
+    text: "cosign-keys"
+    explanation: "Not correct. config-policy-controller holds the settings. The webhook writes config-image-policies itself."
+  correct_option: a
+  explanation: "Correct. config-policy-controller holds the settings. The webhook writes config-image-policies itself."
+- id: ats123-010-02-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Read the release values"
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-chart-installs.md
+  prompt: "Which command shows the values that were set on the Helm release?"
+  options:
+  - id: a
+    text: "helm get values"
+    explanation: "Correct. helm get values prints the user-supplied values of a release."
+  - id: b
+    text: "helm show chart"
+    explanation: "Not correct. helm get values prints the user-supplied values of a release."
+  - id: c
+    text: "kubectl get values"
+    explanation: "Not correct. helm get values prints the user-supplied values of a release."
+  - id: d
+    text: "helm list --values"
+    explanation: "Not correct. helm get values prints the user-supplied values of a release."
+  correct_option: a
+  explanation: "Correct. helm get values prints the user-supplied values of a release."
+- id: ats123-010-02-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Make a change last"
+  source_readings:
+  - sections/section-010/module-02/course-02-chart-values-and-configuration-data.md
+  prompt: "What makes a change to a setting last across upgrades?"
+  options:
+  - id: a
+    text: "Set it through helm upgrade with --reuse-values and --set-string"
+    explanation: "Correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  - id: b
+    text: "Edit the ConfigMap with kubectl edit"
+    explanation: "Not correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  - id: c
+    text: "Delete the webhook pod"
+    explanation: "Not correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  - id: d
+    text: "Add a label to the namespace"
+    explanation: "Not correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  correct_option: a
+  explanation: "Correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+- id: ats123-010-02-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Avoid resetting values"
+  source_readings:
+  - sections/section-010/module-02/course-02-chart-values-and-configuration-data.md
+  prompt: "What happens to your earlier values when you run helm upgrade without --reuse-values and without a values file?"
+  options:
+  - id: a
+    text: "The values return to the chart defaults"
+    explanation: "Correct. Without --reuse-values the release uses the chart defaults for any value that you do not pass again."
+  - id: b
+    text: "The values stay unchanged"
+    explanation: "Not correct. Without --reuse-values the release uses the chart defaults for any value that you do not pass again."
+  - id: c
+    text: "The release is deleted"
+    explanation: "Not correct. Without --reuse-values the release uses the chart defaults for any value that you do not pass again."
+  - id: d
+    text: "Only the image value is reset"
+    explanation: "Not correct. Without --reuse-values the release uses the chart defaults for any value that you do not pass again."
+  correct_option: a
+  explanation: "Correct. Without --reuse-values the release uses the chart defaults for any value that you do not pass again."
+- id: ats123-010-02-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Trust a private registry"
+  source_readings:
+  - sections/section-010/module-02/course-03-registries-certificates-and-pull-secrets.md
+  prompt: "Which value lets the webhook trust a registry that uses a private certificate authority?"
+  options:
+  - id: a
+    text: "registryCaBundle"
+    explanation: "Correct. registryCaBundle gives the webhook the certificate authority of the registry."
+  - id: b
+    text: "signaturePullSecrets"
+    explanation: "Not correct. registryCaBundle gives the webhook the certificate authority of the registry."
+  - id: c
+    text: "failurePolicy"
+    explanation: "Not correct. registryCaBundle gives the webhook the certificate authority of the registry."
+  - id: d
+    text: "imagePullPolicy"
+    explanation: "Not correct. registryCaBundle gives the webhook the certificate authority of the registry."
+  correct_option: a
+  explanation: "Correct. registryCaBundle gives the webhook the certificate authority of the registry."
+- id: ats123-010-02-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Separate pull secrets"
+  source_readings:
+  - sections/section-010/module-02/course-03-registries-certificates-and-pull-secrets.md
+  prompt: "Which setting gives the webhook the credentials to read the signatures of a private repository?"
+  options:
+  - id: a
+    text: "signaturePullSecrets"
+    explanation: "Correct. signaturePullSecrets is used for signature reads. Pod pull secrets are used for the images."
+  - id: b
+    text: "registryCaBundle"
+    explanation: "Not correct. signaturePullSecrets is used for signature reads. Pod pull secrets are used for the images."
+  - id: c
+    text: "no-match-policy"
+    explanation: "Not correct. signaturePullSecrets is used for signature reads. Pod pull secrets are used for the images."
+  - id: d
+    text: "namespaceSelector"
+    explanation: "Not correct. signaturePullSecrets is used for signature reads. Pod pull secrets are used for the images."
+  correct_option: a
+  explanation: "Correct. signaturePullSecrets is used for signature reads. Pod pull secrets are used for the images."
+- id: ats123-010-02-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Diagnose a registry error"
+  source_readings:
+  - sections/section-010/module-02/course-03-registries-certificates-and-pull-secrets.md
+  prompt: "A refusal message names no policy and shows a certificate error from the registry. What is the likely cause?"
+  options:
+  - id: a
+    text: "The webhook does not trust the registry certificate"
+    explanation: "Correct. An error without a policy name comes before any policy runs, so the problem is access or trust to the registry."
+  - id: b
+    text: "The image has no signature"
+    explanation: "Not correct. An error without a policy name comes before any policy runs, so the problem is access or trust to the registry."
+  - id: c
+    text: "The policy glob is too broad"
+    explanation: "Not correct. An error without a policy name comes before any policy runs, so the problem is access or trust to the registry."
+  - id: d
+    text: "The namespace label is missing"
+    explanation: "Not correct. An error without a policy name comes before any policy runs, so the problem is access or trust to the registry."
+  correct_option: a
+  explanation: "Correct. An error without a policy name comes before any policy runs, so the problem is access or trust to the registry."
+- id: ats123-010-02-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Operate the webhook safely"
+  source_readings:
+  - sections/section-010/module-02/course-04-upgrades-availability-and-removal.md
+  prompt: "Why should you run more than one replica of the webhook?"
+  options:
+  - id: a
+    text: "With failure policy Fail, one unavailable webhook blocks deployments in opted-in namespaces"
+    explanation: "Correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  - id: b
+    text: "It makes signatures larger"
+    explanation: "Not correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  - id: c
+    text: "It is required to read ConfigMaps"
+    explanation: "Not correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  - id: d
+    text: "It lets the chart skip the TrustRoot"
+    explanation: "Not correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  correct_option: a
+  explanation: "Correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+- id: ats123-010-02-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Know what uninstall does"
+  source_readings:
+  - sections/section-010/module-02/course-04-upgrades-availability-and-removal.md
+  prompt: "What does helm uninstall of the release do to enforcement?"
+  options:
+  - id: a
+    text: "It removes the webhook configurations, so every image is admitted"
+    explanation: "Correct. Without the webhook configurations the API server no longer calls the webhook."
+  - id: b
+    text: "It keeps enforcing with cached policies"
+    explanation: "Not correct. Without the webhook configurations the API server no longer calls the webhook."
+  - id: c
+    text: "It switches enforcement to warn mode"
+    explanation: "Not correct. Without the webhook configurations the API server no longer calls the webhook."
+  - id: d
+    text: "It refuses every image"
+    explanation: "Not correct. Without the webhook configurations the API server no longer calls the webhook."
+  correct_option: a
+  explanation: "Correct. Without the webhook configurations the API server no longer calls the webhook."

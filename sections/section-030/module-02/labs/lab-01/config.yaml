@@ -1,0 +1,57 @@
+# Narrow A Keyless Identity Pattern
+# Astrona graded lab. Schema: internal/config.LabConfig.
+
+metadata:
+  name: "ats-123-lab-030-02"
+  docs:
+    guide: "solution.md"
+    solution: "solution.md"
+    question: "question.md"
+    examQuestion: "question.md"
+    prerequisites: "prerequisites.md"
+bootstrap:
+  init:
+    - name: "install-tools"
+      description: "Installs Helm 3.22.1, the lab registry, the workstation tools, the signing key and Policy Controller v0.15.1"
+      type: "file"
+      source: "bootstrap/01-install-tools.sh"
+    - name: "ats-123-lab-030-02-setup"
+      description: "Creates the starting state the task works from"
+      type: "file"
+      source: "bootstrap/02-seed-state.sh"
+  manifests:
+    - name: "lab-start"
+      description: "Namespaces, the lab registry and the workstation pod."
+      type: "file"
+      source: "manifests/lab-start.yaml"
+testing:
+  init:
+    - name: "wait-for-workstation"
+      description: "Waits until the workstation, the registry and the webhook answer"
+      type: "file"
+      source: "testing/wait-for-workstation.sh"
+    - name: "reference-solution"
+      description: "The remediation a correct learner performs; used by `astrona test`"
+      type: "file"
+      source: "solution/apply.sh"
+validation:
+  scripts:
+    - name: "validate-identity-pattern"
+      description: "Confirms the identity of podinfo-release accepts the release workflow on tags and rejects the sample subjects that must not match"
+      type: "file"
+      source: "validation/validate-identity-pattern.sh"
+    - name: "validate-release-admission"
+      description: "Confirms prod admits podinfo:6.10.0 and refuses an image that no policy matches"
+      type: "file"
+      source: "validation/validate-release-admission.sh"
+    - name: "validate-safe-settings"
+      description: "Confirms the webhook still fails closed and images that match no policy are denied"
+      type: "file"
+      source: "validation/validate-safe-settings.sh"
+teardown:
+  keepCluster: false
+runtime:
+  kind:
+    preloadImages:
+      - alpine:3.22
+      - registry:3.1.2

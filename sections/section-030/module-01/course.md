@@ -4,7 +4,7 @@ Every key policy has the same weak point: the private key. Whoever holds it can 
 
 Keep one sentence in mind: **a keyless signature is only as strict as the identity you require.** A valid Fulcio certificate proves that someone with some identity signed. Your policy decides which issuer and which subject count, and a loose regular expression turns "our release workflow" into "anyone on GitHub".
 
-The module has two parts. **Keyless Signatures And The Identity In The Certificate** explains how Fulcio, the OpenID Connect (OIDC) token and the transparency log work together, and reads the identity of a real signed image with `cosign verify`. **Keyless Authorities, Identities And Trust Roots** writes the keyless policy, explains exact and regular expression identities, the bundle format and `TrustRoot` resources for private Sigstore instances. A graded lab follows the second part.
+The module has four parts. **Keyless Signatures And The Identity In The Certificate** explains how Fulcio, the OpenID Connect (OIDC) token and the transparency log work together, and reads the identity of a real signed image with `cosign verify`. **Keyless Authorities, Identities And Trust Roots** writes the keyless policy, explains exact and regular expression identities, the bundle format and `TrustRoot` resources for private Sigstore instances. A graded lab follows the second part. **Inside A Fulcio Certificate** reads the facts a certificate carries and explains why it lives for minutes, and **Identity Providers And Subjects** lists the issuer and subject of common providers and shows how to test an expression before it goes into a policy.
 
 ## Learning objectives
 

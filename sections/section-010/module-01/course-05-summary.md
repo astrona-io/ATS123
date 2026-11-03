@@ -8,6 +8,8 @@ The API server calls mutating admission webhooks first and validating admission 
 
 A server-side dry run sends a pod through all of these steps and stores nothing. Policy Controller's webhooks have no side effects, so the API server calls them during a dry run, and the result is the webhook's real decision. That makes `kubectl run --dry-run=server` the quickest way to test a policy, even when the node could not pull the image.
 
+Policy Controller also checks higher-level workload objects through their pod template, and replaces a tag with the digest it resolved, so a Deployment is refused when it is applied, not when its pods start. An error message names the webhook, the image, the policy and the reason, and the webhook's log adds the detail; reading them in a fixed order finds the cause of a refusal quickly.
+
 Three settings frame every policy. Policy Controller only sees namespaces with the label `policy.sigstore.dev/include=true`. An image that no policy matches follows the no-match policy in the ConfigMap `config-policy-controller`, which denies by default and can be set to `warn` or `allow`. When the webhook cannot answer, the API server follows the webhook's failure policy, and only `Fail` keeps an outage from admitting unchecked images. The key facts to remember are these:
 
 - The opt-in label is exactly `policy.sigstore.dev/include=true`.

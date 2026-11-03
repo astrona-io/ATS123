@@ -1,4 +1,4 @@
-# Final domain knowledge check across all four sections.
+# Final domain knowledge check across all four sections and their modules.
 schema_version: 1
 kind: question_bank
 id: ats123-final
@@ -298,3 +298,223 @@ questions:
       problem.
   correct_option: b
   explanation: Correct. A policy that never finds its attestation fails every image.
+- id: ats123-final-q13
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Make a change last"
+  source_readings:
+  - sections/section-010/module-02/course-02-chart-values-and-configuration-data.md
+  prompt: "What makes a change to a setting last across upgrades?"
+  options:
+  - id: a
+    text: "Set it through helm upgrade with --reuse-values and --set-string"
+    explanation: "Correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  - id: b
+    text: "Edit the ConfigMap with kubectl edit"
+    explanation: "Not correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  - id: c
+    text: "Delete the webhook pod"
+    explanation: "Not correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  - id: d
+    text: "Add a label to the namespace"
+    explanation: "Not correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+  correct_option: a
+  explanation: "Correct. A change through the release is kept. A hand edit of the ConfigMap is overwritten at the next upgrade."
+- id: ats123-final-q14
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Operate the webhook safely"
+  source_readings:
+  - sections/section-010/module-02/course-04-upgrades-availability-and-removal.md
+  prompt: "Why should you run more than one replica of the webhook?"
+  options:
+  - id: a
+    text: "With failure policy Fail, one unavailable webhook blocks deployments in opted-in namespaces"
+    explanation: "Correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  - id: b
+    text: "It makes signatures larger"
+    explanation: "Not correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  - id: c
+    text: "It is required to read ConfigMaps"
+    explanation: "Not correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  - id: d
+    text: "It lets the chart skip the TrustRoot"
+    explanation: "Not correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+  correct_option: a
+  explanation: "Correct. The failure policy Fail refuses requests when the webhook cannot answer, so its availability is the availability of deployments."
+- id: ats123-final-q15
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Use a catch-all that refuses"
+  source_readings:
+  - sections/section-020/module-02/course-02-several-authorities-and-policies.md
+  prompt: "What does a catch-all policy with a static authority of action fail give you?"
+  options:
+  - id: a
+    text: "A refusal that names the policy for registries you want blocked"
+    explanation: "Correct. The error names the policy, which is clearer than the no-match policy message."
+  - id: b
+    text: "Faster admission for signed images"
+    explanation: "Not correct. The error names the policy, which is clearer than the no-match policy message."
+  - id: c
+    text: "Automatic key rotation"
+    explanation: "Not correct. The error names the policy, which is clearer than the no-match policy message."
+  - id: d
+    text: "A warning instead of a refusal"
+    explanation: "Not correct. The error names the policy, which is clearer than the no-match policy message."
+  correct_option: a
+  explanation: "Correct. The error names the policy, which is clearer than the no-match policy message."
+- id: ats123-final-q16
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Scope of match"
+  source_readings:
+  - sections/section-020/module-02/course-04-limiting-a-policy-to-some-resources.md
+  prompt: "What is the match field of a ClusterImagePolicy for?"
+  options:
+  - id: a
+    text: "Limiting the policy to resource kinds and labels"
+    explanation: "Correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  - id: b
+    text: "Selecting the signing key"
+    explanation: "Not correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  - id: c
+    text: "Setting the failure policy"
+    explanation: "Not correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  - id: d
+    text: "Choosing the Rekor log"
+    explanation: "Not correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+  correct_option: a
+  explanation: "Correct. match narrows what the policy applies to. Objects it leaves out fall to the no-match policy, so it is not a security boundary."
+- id: ats123-final-q17
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Several identities"
+  source_readings:
+  - sections/section-030/module-02/course-02-several-identities-and-authorities.md
+  prompt: "When can one keyless authority list several identities?"
+  options:
+  - id: a
+    text: "When they share one Fulcio and one set of logs"
+    explanation: "Correct. Several identities share trust. Use several authorities when the trust differs."
+  - id: b
+    text: "When they use different Fulcio instances"
+    explanation: "Not correct. Several identities share trust. Use several authorities when the trust differs."
+  - id: c
+    text: "When they use different keys"
+    explanation: "Not correct. Several identities share trust. Use several authorities when the trust differs."
+  - id: d
+    text: "Never"
+    explanation: "Not correct. Several identities share trust. Use several authorities when the trust differs."
+  correct_option: a
+  explanation: "Correct. Several identities share trust. Use several authorities when the trust differs."
+- id: ats123-final-q18
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Describe a private Sigstore"
+  source_readings:
+  - sections/section-030/module-02/course-04-trust-roots-for-a-private-sigstore.md
+  prompt: "Which resource describes the trust of a private Sigstore?"
+  options:
+  - id: a
+    text: "TrustRoot"
+    explanation: "Correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  - id: b
+    text: "ConfigMap"
+    explanation: "Not correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  - id: c
+    text: "ServiceAccount"
+    explanation: "Not correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  - id: d
+    text: "Secret of type tls"
+    explanation: "Not correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+  correct_option: a
+  explanation: "Correct. A TrustRoot holds the TUF root or the keys, and authorities point to it with trustRootRef."
+- id: ats123-final-q19
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Use CUE for requirements"
+  source_readings:
+  - sections/section-040/module-02/course-02-writing-cue-policies.md
+  prompt: "How does CUE treat fields that the policy does not mention?"
+  options:
+  - id: a
+    text: "It ignores them"
+    explanation: "Correct. CUE states what must be present."
+  - id: b
+    text: "It refuses the image"
+    explanation: "Not correct. CUE states what must be present."
+  - id: c
+    text: "It deletes them"
+    explanation: "Not correct. CUE states what must be present."
+  - id: d
+    text: "It requires them to be empty"
+    explanation: "Not correct. CUE states what must be present."
+  correct_option: a
+  explanation: "Correct. CUE states what must be present."
+- id: ats123-final-q20
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Entries of one authority"
+  source_readings:
+  - sections/section-040/module-02/course-04-combining-attestations.md
+  prompt: "An authority has two attestation entries. When does an image pass?"
+  options:
+  - id: a
+    text: "When both entries pass"
+    explanation: "Correct. Entries of one authority combine as AND."
+  - id: b
+    text: "When either entry passes"
+    explanation: "Not correct. Entries of one authority combine as AND."
+  - id: c
+    text: "When the first passes"
+    explanation: "Not correct. Entries of one authority combine as AND."
+  - id: d
+    text: "When no entry fails to parse"
+    explanation: "Not correct. Entries of one authority combine as AND."
+  correct_option: a
+  explanation: "Correct. Entries of one authority combine as AND."
+- id: ats123-final-q21
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Test cross-team use"
+  source_readings:
+  - sections/section-040/module-03/course-01-splitting-policies-by-owner.md
+  prompt: "Which test proves that the split works?"
+  options:
+  - id: a
+    text: "A team's key must not be accepted in another team's repository"
+    explanation: "Correct. The point is that keys no longer work outside their prefix."
+  - id: b
+    text: "All images pass"
+    explanation: "Not correct. The point is that keys no longer work outside their prefix."
+  - id: c
+    text: "No image passes"
+    explanation: "Not correct. The point is that keys no longer work outside their prefix."
+  - id: d
+    text: "The webhook restarts"
+    explanation: "Not correct. The point is that keys no longer work outside their prefix."
+  correct_option: a
+  explanation: "Correct. The point is that keys no longer work outside their prefix."
+- id: ats123-final-q22
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Availability"
+  source_readings:
+  - sections/section-040/module-03/course-04-monitoring-the-webhook.md
+  prompt: "Why does the webhook need a disruption budget?"
+  options:
+  - id: a
+    text: "Voluntary disruptions must not take all replicas down"
+    explanation: "Correct. With failure policy Fail, no replicas means refused deployments."
+  - id: b
+    text: "It speeds up verification"
+    explanation: "Not correct. With failure policy Fail, no replicas means refused deployments."
+  - id: c
+    text: "It rotates keys"
+    explanation: "Not correct. With failure policy Fail, no replicas means refused deployments."
+  - id: d
+    text: "It stores policies"
+    explanation: "Not correct. With failure policy Fail, no replicas means refused deployments."
+  correct_option: a
+  explanation: "Correct. With failure policy Fail, no replicas means refused deployments."

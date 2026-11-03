@@ -8,6 +8,8 @@ Cosign signs an image digest with a private key and stores a classic signature i
 
 A `ClusterImagePolicy` lists `images` globs, `authorities` and a `mode`. Globs are matched against the image name with its digest; `*` stops at `/`, `**` does not, and the registry host must match exactly, port included. An image passes a policy when any one of its authorities accepts it, and it must pass every policy that matches it. A key authority takes the public key inline as `data`, from a Secret in the Policy Controller namespace with `secretRef`, or from a key management service with `kms`.
 
+A cosign key pair is an encrypted private key file and a public key file. The private key is protected by a password, or kept in a key management service so it never exists as a file. When an image that is signed is still refused, the cause is almost always one of a short list: the signature belongs to another digest, another key signed it, the glob does not match, or the signature has the wrong format.
+
 The `warn` mode checks images but admits the ones that fail, with a warning. It is the safe way to try a new policy, and it protects nothing if it is left on. The key facts to remember are these:
 
 - Sign the digest, not the tag.

@@ -4,7 +4,7 @@ A signature tells you that the release pipeline approved an image. It does not t
 
 Keep one sentence in mind: **an attestation check is only as useful as the policy that reads it, and a policy is only safe after it has run in warn mode.** A policy that refuses the wrong images on day one gets switched off; a policy that only warns forever protects nothing.
 
-The module has two parts. **Attestation Policies With CUE And Rego** attaches SLSA provenance to an image with `cosign attest`, and extends a key policy so it requires provenance from one build service, checked with a CUE policy. A graded lab follows it. **Rolling Out Policies And Reading Denials** covers warn mode, the order in which to turn things on, and how to read why the webhook refused a pod.
+The module has four parts. **Attestation Policies With CUE And Rego** attaches SLSA provenance to an image with `cosign attest`, and extends a key policy so it requires provenance from one build service, checked with a CUE policy. A graded lab follows it. **Rolling Out Policies And Reading Denials** covers warn mode, the order in which to turn things on, and how to read why the webhook refused a pod. **Inspecting Attestations** takes an attestation apart into its envelope, statement and predicate, and **How Attestation Checks Are Evaluated** states the rules and tests a CUE policy with cosign before it reaches the cluster.
 
 ## Learning objectives
 
