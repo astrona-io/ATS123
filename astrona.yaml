@@ -13,7 +13,7 @@
 training:
   id: ATS123
   title: "Sigstore: Kubernetes Enforcement With Policy Controller"
-  maturity: draft
+  maturity: alpha
   description: >
     Training material covering the Kubernetes Enforcement With Policy
     Controller domain of the Sigstore training path: how the Policy
